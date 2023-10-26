@@ -35,12 +35,13 @@ model Posts {
 	user_id			String
 	title			String		@unique
 	text			String
-	photo			Photo[]
+	photos			Photos[]
 }
 
-model Photo {
+model Photos {
 	id 				String 		@id @default(uuid())
-	url 			String
+	url 			String		@default("None")
+	image			Bytes
 	post			Posts 		@relation(fields: [post_id], references: [id])
 	post_id			String
 }
