@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 class UserModel {
     async createUser(
         userID: string,
-        nickname: string,
+        userLogin: string,
         password: string,
         profilePicture: Buffer
     ) {
@@ -13,7 +13,7 @@ class UserModel {
             const user = prisma.users.create({
                 data: {
                     id: userID,
-                    nickname,
+                    login: userLogin,
                     password,
                     profile_picture: profilePicture
                 }
@@ -42,12 +42,27 @@ class UserModel {
         }
     }
 
-    async updateUserNickname(userID: string, nickname: string) {
+    async getUserByLogin(userLogin: string) {
+        await prisma.$connect()
+        try {
+            const user = prisma.users.findFirst({
+                where: {login: userLogin}
+            })
+            return user
+        } catch(e) {
+            console.error(e)
+            throw e
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async updateUserNickname(userID: string, userLogin: string) {
         await prisma.$connect()
         try {
             const user = prisma.users.update({
                 where: {id: userID},
-                data: {nickname: nickname}
+                data: {login: userLogin}
             })
 
             return user
@@ -152,3 +167,5 @@ class UserModel {
         }
     }
 }
+
+export default new UserModel()

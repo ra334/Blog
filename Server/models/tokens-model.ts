@@ -53,3 +53,5 @@ class TokenModel {
         }
     }
 }
+
+export default new TokenModel()

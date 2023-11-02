@@ -88,3 +88,5 @@ class PostModel {
         }
     }
 }
+
+export default new PostModel()

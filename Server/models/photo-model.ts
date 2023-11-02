@@ -71,3 +71,5 @@ class PhotoModel {
         }
     }
 }
+
+export default new PhotoModel()

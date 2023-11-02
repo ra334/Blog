@@ -10,7 +10,7 @@ datasource db {
 
 model Users {
 	id				String		@id
-	nickname 		String		@unique
+	login 			String		@unique
 	password 		String
 	role 	 		String		@default("User")
 	last_login 		DateTime	@default(now())
