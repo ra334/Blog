@@ -1,10 +1,10 @@
-import express from 'express';
-import http2 from 'http2';
-import http2Express from 'http2-express-bridge'
-import fs from 'fs';
+import * as express from 'express';
+import * as http2 from 'http2';
+import http2Express = require('http2-express-bridge');
+import * as fs from 'fs';
 import { Request, Response} from 'express';
 import helmet from 'helmet'
-import cors from 'cors'
+import cors = require('cors');
 import router from './router/router'
 const app = http2Express(express)
 
@@ -14,13 +14,14 @@ app.use('/api', router)
 
 app.get('/', (req: Request, res: Response) => {
     res.send('hello')  
+    res.status(200).end()
 })
 
 const server = http2.createSecureServer({
-    key: fs.readFileSync(`${__dirname}/cert/server.key`),
-    cert: fs.readFileSync(`${__dirname}/cert/server.cert`)
+    key: fs.readFileSync('./cert/server.key'),
+    cert: fs.readFileSync('./cert/server.cert'),
 }, app)
 
-server.listen(3300, () => {
-    console.log('server is running on port 3300')
+server.listen(443, () => {
+    console.log('server is running https://localhost')
 })

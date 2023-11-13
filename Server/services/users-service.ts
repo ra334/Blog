@@ -4,6 +4,16 @@ import tokensService from "./tokens-service";
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs'
 
+type User = {
+    id: string;
+    login: string;
+    password: string;
+    role: string;
+    account_status: string;
+    last_login: object;
+    profile_picture: Buffer;
+}
+
 class UserService {
 
     #loginLength(login: string) {
@@ -32,33 +42,34 @@ class UserService {
     }
 
     async login(login: string, password: string) {
-        let user;
-
-        this.#loginLength(login)
-        this.#passwordLength(password)
-
+        let user: User | null;
+    
+        this.#loginLength(login);
+        this.#passwordLength(password);
+    
         if (login.length >= 50) {
-            throw new Error('Password is too long')
+            throw new Error('Password is too long');
         }
-        
+    
         try {
-            user = await usersModel.getUserByLogin(login)
+            user = await usersModel.getUserByLogin(login);
         } catch (e) {
-            throw new Error("User doesn't exist!")
+            throw new Error("User doesn't exist!");
         }
-
-        if (hashPassword(password) !== user.password) {
-            throw new Error('Password incorrect!')
+    
+        if (hashPassword(password) !== user!.password) {
+            throw new Error('Password incorrect!');
         }
-
-        return tokensService.generateToken()
+    
+        return tokensService.generateTokens({ id: user!.id, role: user!.role });
     }
 
     async registration(login: string, password: string) {
+        let user: User | null;
+        
         this.#loginLength(login)
         this.#passwordLength(password)
 
-        let user;
         const userID = uuidv4()
         const logoBuffer = this.#readLogo()
 
@@ -68,7 +79,7 @@ class UserService {
             throw new Error('User is already exist!')
         }
 
-        return tokensService.generateToken()
+        return tokensService.generateTokens({ id: user!.id, role: user!.role })
     }
 }
 

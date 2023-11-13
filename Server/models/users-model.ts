@@ -5,6 +5,7 @@ class UserModel {
     async createUser(
         userID: string,
         userLogin: string,
+        nickName: string,
         password: string,
         profilePicture: Buffer
     ) {
@@ -14,6 +15,7 @@ class UserModel {
                 data: {
                     id: userID,
                     login: userLogin,
+                    nickname: nickName,
                     password,
                     profile_picture: profilePicture
                 }
@@ -42,32 +44,16 @@ class UserModel {
         }
     }
 
-    async getUserByLogin(userLogin: string) {
+    async getUserByNickname(nickName: string) {
         await prisma.$connect()
         try {
             const user = prisma.users.findFirst({
-                where: {login: userLogin}
+                where: {nickname: nickName}
             })
             return user
         } catch(e) {
             console.error(e)
             throw e
-        } finally {
-            await prisma.$disconnect()
-        }
-    }
-
-    async updateUserNickname(userID: string, userLogin: string) {
-        await prisma.$connect()
-        try {
-            const user = prisma.users.update({
-                where: {id: userID},
-                data: {login: userLogin}
-            })
-
-            return user
-        } catch(e) {
-            throw(e)
         } finally {
             await prisma.$disconnect()
         }

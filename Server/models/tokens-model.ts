@@ -17,7 +17,7 @@ class TokenModel {
             console.error(e)
             throw(e)
         } finally {
-            await prisma.$disconnect
+            await prisma.$disconnect()
         }
     }
 
@@ -33,7 +33,23 @@ class TokenModel {
             console.error(e)
             throw(e)
         } finally {
-            await prisma.$disconnect
+            await prisma.$disconnect()
+        }
+    }
+
+    async getTokensByUserID(userID: string) {
+        try {
+            await prisma.$connect()
+            const tokens = prisma.tokens.findMany({
+                where: {user_id: userID}
+            })
+
+            return tokens
+        } catch(e) {
+            console.error(e)
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
         }
     }
 
@@ -49,7 +65,7 @@ class TokenModel {
             console.error(e)
             throw(e)
         } finally {
-            await prisma.$disconnect
+            await prisma.$disconnect()
         }
     }
 }
