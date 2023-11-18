@@ -22,38 +22,6 @@ class PostModel {
         }
     }
 
-    async getPost(postID: string) {
-        try {
-            await prisma.$connect()
-            const post = await prisma.posts.findFirst({
-                where: {id: postID}
-            })
-
-            return post
-        } catch (e) {
-            console.error(e)
-            throw(e)
-        } finally {
-            await prisma.$disconnect()
-        }
-    }
-
-    async getPosts(userID: string) {
-        try {
-            await prisma.$connect()
-            const posts = await prisma.posts.findMany({
-                where: {user_id: userID}
-            })
-
-            return posts
-        } catch(e) {
-            console.error(e)
-            throw(e)
-        } finally {
-            await prisma.$disconnect()
-        }
-    }
-
     async updateTitle(postID: string, title: string) {
         try {
             await prisma.$connect()
@@ -77,6 +45,22 @@ class PostModel {
             const post = await prisma.posts.update({
                 where: {id: postID},
                 data: {text}
+            })
+
+            return post
+        } catch (e) {
+            console.error(e)
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async getPost(postID: string) {
+        try {
+            await prisma.$connect()
+            const post = await prisma.posts.findFirst({
+                where: {id: postID}
             })
 
             return post
