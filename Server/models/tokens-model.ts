@@ -21,7 +21,7 @@ class TokenModel {
         }
     }
 
-    async getToken(tokenID: string) {
+    async getTokenByID(tokenID: string) {
         try {
             await prisma.$connect()
             const token = prisma.tokens.findFirst({
@@ -45,6 +45,25 @@ class TokenModel {
             })
 
             return tokens
+        } catch(e) {
+            console.error(e)
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async getToken(userID: string, token: string) {
+        try {
+            await prisma.$connect()
+            const tokenID = prisma.tokens.findFirst({
+                where: {
+                    user_id: userID,
+                    token
+                }
+            })
+
+            return tokenID
         } catch(e) {
             console.error(e)
             throw(e)
