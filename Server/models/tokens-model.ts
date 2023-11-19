@@ -2,11 +2,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class TokenModel {
-    async createToken(userID: string, token: string) {
+    async createToken(tokenID: string, userID: string, token: string) {
         try {
             await prisma.$connect()
             const createToken = await prisma.tokens.create({
                 data: {
+                    id: tokenID,
                     user_id: userID,
                     token
                 }
