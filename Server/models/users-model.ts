@@ -53,7 +53,26 @@ class UserModel {
             return user
         } catch(e) {
             console.error(e)
-            throw e
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async getUserByLoginAndPassword(login: string, password: string) {
+        await prisma.$connect()
+        try {
+            const user = await prisma.users.findFirst({
+                where: {
+                    login,
+                    password
+                }
+            })
+
+            return user
+        } catch(e) {
+            console.error(e)
+            throw(e)
         } finally {
             await prisma.$disconnect()
         }
