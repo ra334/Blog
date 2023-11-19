@@ -43,6 +43,17 @@ describe("User model", () => {
         }
     })
 
+    test("should get user by login and password", async () => {
+        const result = await userModel.getUserByLoginAndPassword(user.login, user.password)
+
+        if (result) {
+            const { password, login } = result
+
+            expect(password).toBe(user.password)
+            expect(login).toBe(user.login)
+        }
+    })
+
     test("should update a password", async () => {
         const newPassword = 'new_password';
 
@@ -63,7 +74,7 @@ describe("User model", () => {
     
         if (result) {
             const { id, role } = result;
-            expect(id).toBe(userID);
+            expect(id).toBe(user.id);
             expect(role).toBe(newRole);
         }
     });
