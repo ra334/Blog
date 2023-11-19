@@ -24,3 +24,9 @@ export type Post = {
     text: string;
 }
 
+export type Photo = {
+    id: string;
+    url: string;
+    image: Buffer;
+    post_id: string;
+}
