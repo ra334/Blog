@@ -11,7 +11,7 @@ class UserModel {
     ) {
         await prisma.$connect()
         try {
-            const user = prisma.users.create({
+            const user = await prisma.users.create({
                 data: {
                     id: userID,
                     login: userLogin,
@@ -32,7 +32,7 @@ class UserModel {
     async getUser(userID: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.findFirst({
+            const user = await prisma.users.findFirst({
                 where: {id: userID}
             })
 
@@ -47,7 +47,7 @@ class UserModel {
     async getUserByNickname(nickName: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.findFirst({
+            const user = await prisma.users.findFirst({
                 where: {nickname: nickName}
             })
             return user
@@ -62,7 +62,7 @@ class UserModel {
     async updateUserPassword(userID: string, password: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.update({
+            const user = await prisma.users.update({
                 where: {id: userID},
                 data: {password: password}
             })
@@ -78,7 +78,7 @@ class UserModel {
     async updateUserRole(userID: string, role: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.update({
+            const user = await prisma.users.update({
                 where: {id: userID},
                 data: {role}
             })
@@ -94,7 +94,7 @@ class UserModel {
     async updateUserLastLogin(userID: string, lastLogin: object) {
         await prisma.$connect()
         try {
-            const user = prisma.users.update({
+            const user = await prisma.users.update({
                 where: {id: userID},
                 data: {last_login: lastLogin}
             })
@@ -110,7 +110,7 @@ class UserModel {
     async updateUserAccountStatus(userID: string, accountStatus: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.update({
+            const user = await prisma.users.update({
                 where: {id: userID},
                 data: {account_status: accountStatus}
             })
@@ -125,7 +125,7 @@ class UserModel {
     async updateUserProfilePicture(userID: string, profilePicture: object) {
         await prisma.$connect()
         try {
-            const user = prisma.users.update({
+            const user = await prisma.users.update({
                 where: {id: userID},
                 data: {profile_picture: profilePicture}
             })
@@ -141,7 +141,7 @@ class UserModel {
     async deleteUser(userID: string) {
         await prisma.$connect()
         try {
-            const user = prisma.users.delete({
+            const user = await prisma.users.delete({
                 where: {id: userID}
             })
 
