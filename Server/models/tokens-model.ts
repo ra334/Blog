@@ -25,7 +25,7 @@ class TokenModel {
     async getTokenByID(tokenID: string) {
         try {
             await prisma.$connect()
-            const token = prisma.tokens.findFirst({
+            const token = await prisma.tokens.findFirst({
                 where: {id: tokenID}
             })
 
@@ -41,7 +41,7 @@ class TokenModel {
     async getTokensByUserID(userID: string) {
         try {
             await prisma.$connect()
-            const tokens = prisma.tokens.findMany({
+            const tokens = await prisma.tokens.findMany({
                 where: {user_id: userID}
             })
 
@@ -57,7 +57,7 @@ class TokenModel {
     async getToken(userID: string, token: string) {
         try {
             await prisma.$connect()
-            const tokenID = prisma.tokens.findFirst({
+            const tokenID = await prisma.tokens.findFirst({
                 where: {
                     user_id: userID,
                     token
@@ -76,7 +76,7 @@ class TokenModel {
     async deleteToken(tokenID: string) {
         try {
             await prisma.$connect()
-            const token = prisma.tokens.delete({
+            const token = await prisma.tokens.delete({
                 where: {id: tokenID}
             })
             
