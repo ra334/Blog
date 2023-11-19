@@ -2,11 +2,16 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class PostModel {
-    async createPost(userID: string, title: string, text: string) {
+    async createPost(
+        postID: string, 
+        userID: string, 
+        title: string, 
+        text: string) {
         try {
             await prisma.$connect()
             const post = await prisma.posts.create({
                 data: {
+                    id: postID,
                     user_id: userID,
                     title,
                     text
