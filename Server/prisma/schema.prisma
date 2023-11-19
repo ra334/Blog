@@ -23,7 +23,7 @@ model Users {
 }
 
 model Tokens {
-	id 				String 		@id @default(uuid())
+	id 				String 		@id 
 	user			Users		@relation(fields: [user_id], references: [id])
 	user_id			String
 	token 			String
@@ -31,7 +31,7 @@ model Tokens {
 }
 
 model Posts {
-	id 				String		@id @default(uuid())
+	id 				String		@id 
 	user			Users		@relation(fields: [user_id], references: [id])
 	user_id			String
 	title			String		@unique
@@ -40,9 +40,9 @@ model Posts {
 }
 
 model Photos {
-	id 				String 		@id @default(uuid())
-	url 			String		@default("None")
-	image			Bytes
+	id 				String 		@id 
+	url 			String?		
+	image			Bytes?
 	post			Posts 		@relation(fields: [post_id], references: [id])
 	post_id			String
 }
