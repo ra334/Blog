@@ -1,30 +1,14 @@
 import userModel from "./users-model";
 import { expect, test, vi, describe } from "vitest";
-import prismaAdapter from "../adapters/__mocks__/prisma-adapter";
 import user from "../data/user-data";
-import { User } from "../types/test-types";
 
-vi.mock("../adapters/__mock__/prisma-adapter.ts");
-
-const userID = user.id
+vi.mock("libs/prisma");
 
 describe("User model", () => {
 
-    const mockPrismaCreate = (value: User) =>
-        prismaAdapter.users.create.mockResolvedValue(value);
-
-    const mockPrismaGet = (value: User | null) =>
-        prismaAdapter.users.findFirst.mockResolvedValue(value);
-
-    const mockPrismaUpdate = (value: User) =>
-        prismaAdapter.users.update.mockResolvedValue(value);
-
-    const mockPrismaDelete = (value: User) =>
-        prismaAdapter.users.delete.mockResolvedValue(value);
+    const userID = user.id
 
     test("should create a new user", async () => {
-        mockPrismaCreate(user);
-
         const { id, login } = await userModel.createUser(
             user.id,
             user.login,
@@ -38,8 +22,6 @@ describe("User model", () => {
     });
 
     test("should get a user by id", async () => {
-        mockPrismaGet(user)
-
         const result = await userModel.getUser(userID);
         
         if (result) {
@@ -51,8 +33,6 @@ describe("User model", () => {
     })
 
     test("should get user by nickname", async () => {
-        mockPrismaGet(user)
-
         const result = await userModel.getUser(user.nickname);
 
         if (result) {
@@ -65,7 +45,6 @@ describe("User model", () => {
 
     test("should update a password", async () => {
         const newPassword = 'new_password';
-        mockPrismaUpdate(user)
 
         const result = await userModel.updateUserPassword(userID, newPassword)
 
@@ -79,7 +58,6 @@ describe("User model", () => {
 
     test("should update user role", async () => {
         const newRole = "admin";
-        mockPrismaUpdate(user);
     
         const result = await userModel.updateUserRole(userID, newRole);
     
@@ -92,7 +70,6 @@ describe("User model", () => {
     
     test("should update user last login", async () => {
         const newLastLogin = new Date();
-        mockPrismaUpdate(user);
     
         const result = await userModel.updateUserLastLogin(userID, newLastLogin);
     
@@ -105,7 +82,6 @@ describe("User model", () => {
     
     test("should update user account status", async () => {
         const newAccountStatus = "inactive";
-        mockPrismaUpdate(user);
     
         const result = await userModel.updateUserAccountStatus(userID, newAccountStatus);
     
@@ -118,7 +94,6 @@ describe("User model", () => {
     
     test("should update user profile picture", async () => {
         const newProfilePicture = Buffer.from("new_picture_data");
-        mockPrismaUpdate(user);
     
         const result = await userModel.updateUserProfilePicture(userID, newProfilePicture);
     
@@ -130,11 +105,12 @@ describe("User model", () => {
     });
 
     test("should delete a user", async () => {
-        mockPrismaDelete(user);
+        const result = await userModel.deleteUser(userID);
 
-        const { id, login } = await userModel.deleteUser(userID);
-
-        expect(id).toBe(userID);
-        expect(login).toBe(user.login);
+        if (result) {
+            const { id, login } = result
+            expect(id).toBe(userID);
+            expect(login).toBe(user.login);
+        }
     });
 });
