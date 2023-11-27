@@ -1,6 +1,6 @@
 import tokensModel from "../models/tokens-model"
-import userModel from "../models/users-model"
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt = require('jsonwebtoken')
+import 'dotenv/config'
 
 type Payload = {
     id: string;
@@ -8,62 +8,81 @@ type Payload = {
 }
 
 class TokenService {
-    #jwtSecretKey = 'jwt_secret_key'
+    #validateTokenExpires(token: string) {
+        const tokenData = jwt.decode(token) as jwt.JwtPayload
 
-    async generateTokens(payload: Payload) {
-        const accesToken = jwt.sign(payload, this.#jwtSecretKey, {expiresIn: '1h'})
-        const refreshToken = jwt.sign(payload, this.#jwtSecretKey, {expiresIn: '7d'})
-        
-        // await tokensModel.createToken(payload.id, refreshToken)
-
-        return {accesToken, refreshToken}
-    }
-
-    generateAccesToken(payload: Payload): string {
-        const accesToken = jwt.sign(payload, this.#jwtSecretKey, {expiresIn: '1h'})
-        return accesToken
-    }
-    
-    validateToken(token: string) {
-        return jwt.verify(token, this.#jwtSecretKey)
-    }
-
-    validateExpires(token: string) {
-
-    }
-
-    async refreshToken(token: string) {
-        
-    }
-
-    async refreshAccesToken(refreshToken: string) {
-        const decoded = this.validateToken(refreshToken) as JwtPayload
-
-        if (!decoded) {
-            throw new Error('Invalid token')
-        }
-        
-        const user = await userModel.getUser(decoded.id)
-
-        if (!user) {
-            throw new Error('User not found')
-        }
-    
-        const storedRefreshTokens = await tokensModel.getTokensByUserID(decoded.id)
-
-        for (const value of storedRefreshTokens) {
-            
+        if (!tokenData || !tokenData.exp) {
+            return false;
         }
 
-        const newTokens = await this.generateTokens({ id: decoded.id, role: decoded.role });
-        return newTokens
+        const currentTimestamp = Math.floor(Date.now() / 1000)
+
+        return tokenData.exp >= currentTimestamp;
+    }
+
+    generateTokens(payload: Payload) {
+        const privateKey = process.env.PRIVATE_KEY
+
+        if (!privateKey) {
+            throw new Error('Private key is not defined');
+        }
+
+        const accessToken = jwt.sign(payload, privateKey, { expiresIn: '30m' })
+        const refreshToken = jwt.sign(payload, privateKey, { expiresIn: '7d' })
+
+        return {accessToken, refreshToken}
+    }
+
+    // for testing
+    generateExpiredTokens(payload: Payload) {
+        const privateKey = process.env.PRIVATE_KEY
+
+        if (!privateKey) {
+            throw new Error('Private key is not defined');
+        }
+
+        const accessToken = jwt.sign(payload, privateKey, { expiresIn: '1s' })
+        const refreshToken = jwt.sign(payload, privateKey, { expiresIn: '1s' })
+
+        return {accessToken, refreshToken}
+    }
+
+    updateAccessToken(accessToken: string) {
+        const decodedToken = jwt.decode(accessToken) as jwt.JwtPayload
+
+        const privateKey = process.env.PRIVATE_KEY
+
+        if (!privateKey) {
+            throw new Error('Private key is not defined');
+        }
+
+        const payload: Payload = {
+            id: decodedToken.id,
+            role: decodedToken.role
+        }
+
+        const token = jwt.sign(payload, privateKey, { expiresIn: '30m' })
+
+        return token
+    }
+
+    async removeExpiredTokens(userID: string) {
+        const tokens = await tokensModel.getTokensByUserID(userID)
+
+        let counter = 0
+
+        for (const refreshToken of tokens) {
+            if (!this.#validateTokenExpires(refreshToken.token)) {
+                await tokensModel.deleteToken(refreshToken.id)
+                counter += 1
+            } else {
+                continue
+            }
+
+        }
+
+        return counter
     }
 }
 
 export default new TokenService()
-
-const tokenService = new TokenService()
-
-const token = tokenService.generateAccesToken({id: 'gay', role: 'gay gay'})
-
-console.log(tokenService.validateToken(token))
