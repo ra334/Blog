@@ -7,7 +7,7 @@ const user = {
     id: userID,
     login: "John",
     password: "password",
-    nickname: "John_" + userID, 
+    nickname: "John_" + userID,
     profile_picture: fs.readFileSync("./assets/logo.png"),
 };
 
