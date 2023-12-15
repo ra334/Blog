@@ -1,23 +1,19 @@
-import hashPassword from "../tools/hash"
+import { hashPassword, comparePassword } from "../tools/hash"
 import usersModel from "../models/users-model"
 import tokensService from "./tokens-service";
 import { v4 as uuidv4 } from 'uuid';
-import fs from 'fs'
+import * as fs from 'fs'
+import tokensModel from "../models/tokens-model";
 
-type User = {
-    id: string;
-    login: string;
-    password: string;
-    role: string;
-    account_status: string;
-    last_login: object;
-    profile_picture: Buffer;
+type Tokens = {
+    accessToken: string;
+    refreshToken: string;
 }
 
 class UserService {
 
     #loginLength(login: string) {
-        if (login.length >= 50) {
+        if (login.length > 50) {
             throw new Error('Login is too long')
         } else {
             return true
@@ -32,54 +28,74 @@ class UserService {
         }
     }
 
+    #nicknameLength(nickname: string) {
+        if (nickname.length > 20) {
+            throw new Error('Nickname is too long')
+        } else {
+            return true
+        }
+    }
+
     #readLogo(): Buffer {
         try {
-            const data: Buffer = fs.readFileSync('../assets/logo.png');
+            const data: Buffer = fs.readFileSync('assets/logo.png');
             return data;
         } catch (err) {
             throw err;
         }
     }
 
-    async login(login: string, password: string) {
-        let user: User | null;
-    
+    async #isUserExist(login: string, password: string) {
+        const hashedPassword = hashPassword(password)
+        const user = await usersModel.getUserByLoginAndPassword(login, hashedPassword)
+        if (user) {
+            throw new Error('User is already exist')
+        } else {
+            return false
+        }
+
+    }
+
+    async login(login: string, nickname: string, password: string): Promise<Tokens> {
         this.#loginLength(login);
         this.#passwordLength(password);
-    
-        if (login.length >= 50) {
-            throw new Error('Password is too long');
+        this.#isUserExist(login, password);
+
+        const user = await usersModel.getUserByNickname(nickname)
+        
+        if (!user) {
+            throw new Error('User not found!');
         }
     
-        try {
-            user = await usersModel.getUserByLogin(login);
-        } catch (e) {
-            throw new Error("User doesn't exist!");
-        }
-    
-        if (hashPassword(password) !== user!.password) {
+        if (!comparePassword(password, user.password)) {
             throw new Error('Password incorrect!');
         }
     
-        return tokensService.generateTokens({ id: user!.id, role: user!.role });
+        const userID = user.id;
+        const tokenID = uuidv4();
+    
+        const tokens = tokensService.generateTokens({ id: userID, role: user.role });
+    
+        await tokensModel.createToken(tokenID, userID, tokens.refreshToken);
+        return tokens;
     }
 
-    async registration(login: string, password: string) {
-        let user: User | null;
-        
+    async registration(login: string, nickname: string, password: string): Promise<Tokens> {
         this.#loginLength(login)
+        this.#nicknameLength(nickname)
         this.#passwordLength(password)
+        this.#isUserExist(login, password)
 
         const userID = uuidv4()
+        const tokenID = uuidv4()
         const logoBuffer = this.#readLogo()
 
-        try {
-            user = await usersModel.createUser(userID, login, password, logoBuffer) 
-        } catch(e) {
-            throw new Error('User is already exist!')
-        }
+        const hashedPassword = hashPassword(password)
+        const user = await usersModel.createUser(userID, login, nickname, hashedPassword, logoBuffer)
 
-        return tokensService.generateTokens({ id: user!.id, role: user!.role })
+        const tokens = tokensService.generateTokens({ id: user!.id, role: user!.role })
+        await tokensModel.createToken(tokenID, userID, tokens.refreshToken)
+        return tokens
     }
 }
 
