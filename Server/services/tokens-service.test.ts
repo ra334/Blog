@@ -18,7 +18,7 @@ describe('Tokens service', () => {
     }
 
     afterAll(async () => {
-        vi.restoreAllMocks()
+        await userModel.deleteUser(userID)
     })
 
     beforeAll(async () => {
