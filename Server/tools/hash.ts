@@ -7,4 +7,9 @@ function hashPassword(password: string): string {
     const hash = bcrypt.hashSync(password, salt)
     return hash
 }
-export default hashPassword
+
+function comparePassword(password: string, hashedPassword: string): boolean {
+    return bcrypt.compareSync(password, hashedPassword)
+}
+
+export {hashPassword, comparePassword}
