@@ -119,9 +119,8 @@ describe("User model", () => {
         const result = await userModel.deleteUser(userID);
 
         if (result) {
-            const { id, login } = result
-            expect(id).toBe(userID);
-            expect(login).toBe(user.login);
+            expect(result[1].id).toBe(userID);
+            expect(result[1].login).toBe(user.login)
         }
     });
 });
