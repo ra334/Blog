@@ -160,9 +160,14 @@ class UserModel {
     async deleteUser(userID: string) {
         await prisma.$connect()
         try {
-            const user = await prisma.users.delete({
-                where: {id: userID}
-            })
+            const user = await prisma.$transaction([
+                prisma.tokens.deleteMany({
+                    where: {user_id: userID}
+                }),
+                prisma.users.delete({
+                    where: {id: userID}
+                })
+            ])
 
             return user
         } catch(e) {
