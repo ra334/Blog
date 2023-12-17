@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { hashPassword, comparePassword } from "../tools/hash"
 import usersModel from "../models/users-model"
 import tokensService from "./tokens-service";
@@ -45,9 +46,8 @@ class UserService {
         }
     }
 
-    async #isUserExist(login: string, password: string) {
-        const hashedPassword = hashPassword(password)
-        const user = await usersModel.getUserByLoginAndPassword(login, hashedPassword)
+    async #isUserExist(nickname: string) {
+        const user = await usersModel.getUserByNickname(nickname)
         if (user) {
             throw new Error('User is already exist')
         } else {
@@ -57,9 +57,9 @@ class UserService {
     }
 
     async login(login: string, nickname: string, password: string): Promise<Tokens> {
-        this.#loginLength(login);
-        this.#passwordLength(password);
-        this.#isUserExist(login, password);
+        this.#loginLength(login)
+        this.#nicknameLength(nickname)
+        this.#passwordLength(password)
 
         const user = await usersModel.getUserByNickname(nickname)
         
@@ -68,7 +68,7 @@ class UserService {
         }
     
         if (!comparePassword(password, user.password)) {
-            throw new Error('Password incorrect!');
+            throw new Error('Password invalid!');
         }
     
         const userID = user.id;
@@ -84,7 +84,7 @@ class UserService {
         this.#loginLength(login)
         this.#nicknameLength(nickname)
         this.#passwordLength(password)
-        this.#isUserExist(login, password)
+        await this.#isUserExist(nickname)
 
         const userID = uuidv4()
         const tokenID = uuidv4()
