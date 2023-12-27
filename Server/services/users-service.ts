@@ -60,6 +60,7 @@ class UserService {
         this.#loginLength(login)
         this.#nicknameLength(nickname)
         this.#passwordLength(password)
+        await this.#isUserExist(nickname)
 
         const user = await usersModel.getUserByNickname(nickname)
         
@@ -84,7 +85,6 @@ class UserService {
         this.#loginLength(login)
         this.#nicknameLength(nickname)
         this.#passwordLength(password)
-        await this.#isUserExist(nickname)
 
         const userID = uuidv4()
         const tokenID = uuidv4()
