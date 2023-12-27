@@ -3,8 +3,6 @@ import { Request, Response, NextFunction } from "express"
 import userController from "../controller/users-controller"
 import postsController from "../controller/posts-controller"
 
-import {execFile, exec } from "child_process"
-
 const router = new Router()
 
 router.post('/login', (req: Request, res: Response, next: NextFunction) => {
