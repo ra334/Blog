@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../UI/Button/Button';
+import ErrorComponent from '../../UI/ErrorComponent/ErrorComponent';
 import './Form.css'
-import axios from 'axios'
 
+import formLogic from './FormLogic';
 import { addLogin, addNickname, addPassword } from '../../../store/slices/authSlice';
+import { useState } from 'react';
 
 type FormProps = {
     h1Text: string;
@@ -12,26 +14,22 @@ type FormProps = {
 function Form(props: FormProps) {
 
     const dispatch = useDispatch()
-    const authData = useSelector((state) => state.auth)
+    const authData = useSelector((state: any) => state.auth)
+    const [error, setError] = useState<string | null>(null);
 
-    async function subbmiting() {
-        const tokens = await axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/registration',
-            data: {
-                login: authData.login,
-                nickname: authData.nickname,
-                password: authData.password
-            }
-        })
-
-        console.log(tokens.data)
+    async function handleSubmit() {
+        try {
+            await formLogic.subbmiting(authData)
+        } catch(err: any) {
+            setError(err.message)
+        }
     }
 
     return (
         <div className="container">
-            <div>
+            <div className="wrapper">
                 <h1 className="title">{props.h1Text}</h1>
+                {error && <ErrorComponent message={error} />}
                 <div className="input__wrapper">
                     <input
                         type="text"
@@ -56,7 +54,7 @@ function Form(props: FormProps) {
                         onChange={(e) => dispatch(addPassword(e.target.value))}
                     />
                 </div>
-                <Button text={props.h1Text} onClick={subbmiting}/>
+                <Button text={props.h1Text} onClick={handleSubmit}/>
             </div>
         </div>
     );

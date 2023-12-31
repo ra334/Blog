@@ -8,14 +8,16 @@ input {
     padding: 5px 10px;
 }
 
-.input__over {
-    text-align: center;
-}
-
 input::placeholder {
     text-align: center;
 }
 
 input:focus {
     color: white;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
