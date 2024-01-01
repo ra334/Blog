@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import ApiError from "../error/ApiError";
 
-export default function (err: Error, req: Request, res: Response) {
+export default function (err: Error, req: Request, res: Response, next: NextFunction) {
     if (err instanceof ApiError) {
-        res.status(err.status).json({message: err.message})
+        return res.status(err.status).json({ message: err.message });
     }
 
-    return res.status(500).json({message: 'Noname error'})
+    return res.status(500).json({ message: 'Noname error' });
 }
