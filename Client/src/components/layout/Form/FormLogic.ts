@@ -6,25 +6,23 @@ type AuthDataType = {
     password: string;
 }
 
-class FormLogic {
+async function subbmiting(authData: AuthDataType){
+    const response = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/registration',
+        data: {
+            login: authData.login,
+            nickname: authData.nickname,
+            password: authData.password
+        },
+        withCredentials: true,
+    });
 
-    async subbmiting(authData: AuthDataType){
-        const response = await axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/registration',
-            data: {
-                login: authData.login,
-                nickname: authData.nickname,
-                password: authData.password
-            },
-            withCredentials: true,
-        });
-
-        if (response.status === 200) {
-            window.history.pushState({}, 'undefined', '/')
-            window.location.reload()
-        }
+    if (response.status === 200) {
+        window.history.pushState({}, 'undefined', '/')
+        window.location.reload()
     }
 }
 
-export default new FormLogic()
+
+export default subbmiting
