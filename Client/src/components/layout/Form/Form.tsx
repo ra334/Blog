@@ -3,7 +3,7 @@ import Button from '../../UI/Button/Button';
 import ErrorComponent from '../../UI/ErrorComponent/ErrorComponent';
 import './Form.css'
 
-import formLogic from './FormLogic';
+import subbmiting from './FormLogic';
 import { addLogin, addNickname, addPassword } from '../../../store/slices/authSlice';
 import { useState } from 'react';
 
@@ -19,7 +19,7 @@ function Form(props: FormProps) {
 
     async function handleSubmit() {
         try {
-            await formLogic.subbmiting(authData)
+            await subbmiting(authData)
         } catch(err: any) {
             setError(err.message)
         }
