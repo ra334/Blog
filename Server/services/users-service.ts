@@ -49,7 +49,7 @@ class UserService {
     async #isUserExist(nickname: string) {
         const user = await usersModel.getUserByNickname(nickname)
         if (user) {
-            throw new Error('User is already exist')
+            return true
         } else {
             return false
         }
@@ -85,6 +85,10 @@ class UserService {
         this.#loginLength(login)
         this.#nicknameLength(nickname)
         this.#passwordLength(password)
+        
+        if (await this.#isUserExist(nickname)) {
+            throw new Error('User is already exist!');
+        }
 
         const userID = uuidv4()
         const tokenID = uuidv4()
