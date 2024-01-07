@@ -3,8 +3,7 @@ import helmet from 'helmet'
 import cors = require('cors');
 import bodyParser = require('body-parser');
 import cookieParser = require('cookie-parser');
-import apiRouter from './router/api/api-router'
-import contentRouter from './router/content/content-router'
+import apiRouter from './router/api-router'
 import ErrorHandlingMiddleware from './middleware/ErrorHandlingMiddleware';
 import path = require('path')
 const app = express()
@@ -17,7 +16,6 @@ app.use(cors({
 app.use(helmet())
 app.use(bodyParser())
 app.use(cookieParser())
-app.use('/', contentRouter)
 app.use('/api', apiRouter)
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(ErrorHandlingMiddleware)
