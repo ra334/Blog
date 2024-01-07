@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import usersService from "../../services/users-service";
+import usersService from "../services/users-service";
 
 type TokensType = {
     accessToken: string;
