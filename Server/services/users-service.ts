@@ -5,6 +5,7 @@ import tokensService from "./tokens-service";
 import { v4 as uuidv4 } from 'uuid';
 import * as fs from 'fs'
 import tokensModel from "../models/tokens-model";
+import ApiError from "../error/ApiError";
 
 type Tokens = {
     accessToken: string;
@@ -15,7 +16,8 @@ class UserService {
 
     #loginLength(login: string) {
         if (login.length > 50) {
-            throw new Error('Login is too long')
+            // throw new Error('Login is too long')
+            throw ApiError.badRequest('Login is too long')
         } else {
             return true
         }
@@ -23,7 +25,7 @@ class UserService {
 
     #passwordLength(password: string) {
         if (password.length >= 80) {
-            throw new Error('Password is too long')
+            throw ApiError.badRequest('Password is too long')
         } else {
             return true
         }
@@ -31,7 +33,7 @@ class UserService {
 
     #nicknameLength(nickname: string) {
         if (nickname.length > 20) {
-            throw new Error('Nickname is too long')
+            throw ApiError.badRequest('Nickname is too long')
         } else {
             return true
         }
@@ -65,17 +67,17 @@ class UserService {
         const user = await usersModel.getUserByNickname(nickname)
         
         if (!user) {
-            throw new Error('User not found!');
+            throw ApiError.badRequest('User not found!')
         }
     
         if (!comparePassword(password, user.password)) {
-            throw new Error('Password invalid!');
+            throw ApiError.badRequest('Password invalid!')
         }
     
         const userID = user.id;
         const tokenID = uuidv4();
     
-        const tokens = tokensService.generateTokens({ id: userID, role: user.role });
+        const tokens = tokensService.generateTokens({ id: userID, role: user.role, nickname: user.nickname });
     
         await tokensModel.createToken(tokenID, userID, tokens.refreshToken);
         return tokens;
@@ -97,7 +99,7 @@ class UserService {
         const hashedPassword = hashPassword(password)
         const user = await usersModel.createUser(userID, login, nickname, hashedPassword, logoBuffer)
 
-        const tokens = tokensService.generateTokens({ id: user!.id, role: user!.role })
+        const tokens = tokensService.generateTokens({ id: user!.id, role: user!.role, nickname: user!.nickname })
         await tokensModel.createToken(tokenID, userID, tokens.refreshToken)
         return tokens
     }
