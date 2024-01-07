@@ -5,10 +5,11 @@ import 'dotenv/config'
 type Payload = {
     id: string;
     role: string;
+    nickname: string;
 }
 
 class TokenService {
-    #validateTokenExpires(token: string) {
+    validateTokenExpires(token: string) {
         const tokenData = jwt.decode(token) as jwt.JwtPayload
 
         if (!tokenData || !tokenData.exp) {
@@ -58,7 +59,8 @@ class TokenService {
 
         const payload: Payload = {
             id: decodedToken.id,
-            role: decodedToken.role
+            role: decodedToken.role,
+            nickname: decodedToken.nickname
         }
 
         const token = jwt.sign(payload, privateKey, { expiresIn: '30m' })
@@ -72,7 +74,7 @@ class TokenService {
         let counter = 0
 
         for (const refreshToken of tokens) {
-            if (!this.#validateTokenExpires(refreshToken.token)) {
+            if (!this.validateTokenExpires(refreshToken.token)) {
                 await tokensModel.deleteToken(refreshToken.id)
                 counter += 1
             } else {
