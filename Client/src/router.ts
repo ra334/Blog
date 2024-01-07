@@ -1,6 +1,8 @@
 import AccountPage from './pages/Account/AccountPage'
 import AuthPage from './pages/Auth/AuthPage'
 import MainPage from './pages/Main/MainPage'
+import WriteArticle from './pages/WriteArticle/WriteArticle';
+import ListArticles from './pages/ListArticles.tsx/ListArticles';
 
 import {
     createBrowserRouter,
@@ -25,6 +27,16 @@ const router = createBrowserRouter([
     {
         path: '/account',
         element: AccountPage()
+    },
+
+    {
+        path: '/write',
+        element: WriteArticle()
+    },
+
+    {
+        path: '/articles',
+        element: ListArticles()
     }
 ])
 
