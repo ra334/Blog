@@ -1,0 +1,33 @@
+header {
+    border-bottom: 1.5px solid;
+    border-color: inherit;
+    margin-top: 10px;
+}
+
+.nav {
+    height: 50px;
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    border-left: 1.5px solid;
+    border-right: 1.5px solid;
+    border-color: inherit;
+    margin-bottom: 10px;
+}
+
+.signIn {
+
+}
+
+.signIn__slash {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.account {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+}
