@@ -1,10 +1,13 @@
-import TypeAnimation from '../../components/UI/Animations/TypeAnimation/TypeAnimation'
+import Header from '../../components/layout/Header/Header'
+import './MainPageStyle.css'
 
 function Main() {
     return (
         <>
-            <h1>Main</h1>
-            <TypeAnimation text='Hello world' ></TypeAnimation>
+            <Header isSignIn={true} accountName='test' />
+            <main className='main'>
+                <h1 className='main__title'>Create your blog for free</h1>
+            </main>
         </>
     )
 }
