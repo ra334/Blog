@@ -6,5 +6,5 @@ export default function (err: Error, req: Request, res: Response, next: NextFunc
         return res.status(err.status).json({ message: err.message });
     }
 
-    return res.status(500).json({ message: 'Noname error' });
+    return res.status(500).json({ message: err.message });
 }
