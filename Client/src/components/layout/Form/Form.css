@@ -3,7 +3,7 @@ input {
     background-color: inherit;
     border-radius: 10px;
     color: inherit;
-    border-color: rgb(7, 255, 7);
+    border-color: inherit;
     margin: 10px 0;
     padding: 5px 10px;
 }
@@ -16,7 +16,7 @@ input:focus {
     color: white;
 }
 
-.wrapper {
+.form__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
