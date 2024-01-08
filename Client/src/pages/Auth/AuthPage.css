@@ -1,11 +1,10 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.auth {
+    /* height: 100%; */
+    margin: auto 0;
 }
 
-.registration_wrapper {
+.auth__wrapper {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }

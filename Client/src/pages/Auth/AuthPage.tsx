@@ -1,17 +1,24 @@
-import Form from '../../components/layout/Form/Form'
-import './AuthPage.css'
+import Form from '../../components/layout/Form/Form';
+import Header from '../../components/layout/Header/Header';
+import './AuthPage.css';
 
 function AuthPage(action: string) {
-
-    if (action === 'registration') {
-        return (
-            <Form h1Text="Registration" />
-        )
-    } else {
-        return (
-            <Form h1Text="Sign In" />
-        )
-    }
+    return (
+        <div className="container">
+            <div className="auth__wrapper">
+                <Header />
+                <div className="auth">
+                    {
+                        action === 'registration' ? (
+                            <Form h1Text="Registration" />
+                        ) : (
+                            <Form h1Text="Sign In" />
+                        )
+                    }
+            </div>
+            </div>
+        </div>
+    );
 }
 
-export default AuthPage
+export default AuthPage;
