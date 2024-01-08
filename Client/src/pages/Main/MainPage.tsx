@@ -4,10 +4,12 @@ import './MainPageStyle.css'
 function Main() {
     return (
         <>
-            <Header isSignIn={true} accountName='test' />
-            <main className='main'>
-                <h1 className='main__title'>Create your blog for free</h1>
-            </main>
+            <div className="container">
+                <Header/>
+                <main className='main'>
+                    <h1 className='main__title'>Create your blog for free</h1>
+                </main>
+            </div>
         </>
     )
 }
