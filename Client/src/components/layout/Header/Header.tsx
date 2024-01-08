@@ -1,38 +1,48 @@
 import { Link } from "react-router-dom"
 import './HeaderStyle.css'
+import { useCookies } from 'react-cookie';
+import { jwtDecode } from "jwt-decode";
 
-type HeaderPropsType = {
-    isSignIn: boolean;
-    accountName: string;
-}
 
-function Header(props: HeaderPropsType) {
+function Header() {
+
+    type PayloadType = {
+        id: string,
+        role: string,
+        nickname: string,
+        iat: number,
+        exp: number
+    }
+
+    const [cookies] = useCookies();
+    const isSignIn = cookies.keys ? true : false
 
     function signIn(isSignIn: boolean) {
         if (isSignIn) {
+            const payload: PayloadType = jwtDecode(cookies.accessToken);
+            const accountName = payload.nickname
             return (
-                <Link to="/account">{props.accountName}</Link>
+                <Link className="header__link" to="/account">{accountName}</Link>
             )
         }
 
         return (
             <div className="signIn">
-                <Link to="/login">SignIn</Link>
+                <Link className="header__link" to="/login">SignIn</Link>
                 <div className="signIn__slash">/</div>
-                <Link to="/registration">Registration</Link>
+                <Link className="header__link" to="/registration">Registration</Link>
             </div>
         )
     }
 
     return (
         <header>
-            <div className="container">
-                <nav className="nav">
-                    <Link to="/write">Write</Link>
-                    <Link to="/articles">List articles</Link>
-                    {signIn(props.isSignIn)}
-                </nav>
-            </div>
+            <nav className="nav">
+                <Link className="header__link" to="/" >Main page</Link>
+                <Link className="header__link" to="/write">Write</Link>
+                <Link className="header__link" to="/articles">List articles</Link>
+                {signIn(isSignIn)}
+            </nav>
         </header>
     )
 }

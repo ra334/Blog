@@ -1,12 +1,15 @@
 header {
     border-bottom: 1.5px solid;
     border-color: inherit;
-    margin-top: 10px;
+}
+
+.header__link:hover {
+    color: white;
+    text-shadow: 0 0 10px white;
 }
 
 .nav {
     height: 50px;
-    width: 100vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
