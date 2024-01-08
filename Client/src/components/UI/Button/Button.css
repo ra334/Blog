@@ -1,9 +1,9 @@
 button {
     background-color: inherit;
     color: inherit;
-    border-radius: 5px;
-    border-color: rgb(7, 255, 7);
-    padding: 5px 20px;
+    border-radius: 8px;
+    border-color: inherit;
+    padding: 10px 20px;
 }
 
 button:active {
