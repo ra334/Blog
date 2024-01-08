@@ -10,8 +10,6 @@ type StateType = {
     password: string;
 }
 
-
-
 const initialState: StateType = {
     login: '',
     nickname: '',
