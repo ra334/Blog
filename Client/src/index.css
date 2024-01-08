@@ -10,6 +10,8 @@ body {
     background-color: #001f3f;
     color: #7FDBFF;
     text-shadow: 0 0 10px #94dcf8;
+    margin: 0;
+    padding: 0;
 }
 
 a, u {
@@ -17,7 +19,12 @@ a, u {
     color: inherit;
 }
 
+h1 {
+    margin: 0;
+}
+
 .container {
     max-width: 1000px;
+    height: 100vh;
     margin: 0 auto;
 }
