@@ -37,4 +37,8 @@ router.patch('/articles:id', () => {
     
 })
 
+router.post('/refresh', (req: Request, res: Response) => {
+    userController.refreshToken(req, res)
+})
+
 export default router
