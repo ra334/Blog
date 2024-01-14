@@ -4,5 +4,9 @@
         "target": "es2015",
         "module": "commonjs",
         "strict": true
-    }
+    },
+
+    "exclude": [
+        "node_modules",
+    ]
 }
