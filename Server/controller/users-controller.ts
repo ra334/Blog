@@ -1,18 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import usersService from "../services/users-service";
-
-type TokensType = {
-    accessToken: string;
-    refreshToken: string;
-}
-
+import tokensService from "../services/tokens-service";
+import { TokensType } from '../types/tokens-type'
 class UserController {
-    #accessToken: string = 'accessToken'
-    #refreshToken: string = 'refreshToken'
-
     #sendCookies(res: Response, tokens: TokensType) {
         res.cookie('accessToken', tokens.accessToken)
         res.cookie('refreshToken', tokens.refreshToken)
+        res.send()
+    }
+
+    #clearCookies(res: Response) {
+        res.clearCookie('accessToken')
+        res.clearCookie('refreshToken')
         res.send()
     }
 
@@ -37,13 +36,34 @@ class UserController {
     }
 
     async logout(req: Request, res: Response) {
-        res.clearCookie(this.#accessToken)
-        res.clearCookie(this.#refreshToken)
-        res.send('Logged out successfully')
+        const tokens: TokensType = req.body
+
+        const isAccessTokenValid = tokensService.vefiryToken(tokens.accessToken)
+        if (isAccessTokenValid) {
+            this.#clearCookies(res)
+        }
     }
 
-    async getUsers(req: Request, res: Response, next: NextFunction) {
-        console.log('getUsers')
+    async refreshToken(req: Request, res: Response) {
+        const tokens: TokensType = req.body
+
+        const isRefreshTokenValid = tokensService.vefiryToken(tokens.refreshToken)
+
+        const isExpiresRefreshTokenValid= tokensService.validateTokenExpires(tokens.refreshToken)
+
+        if (!isExpiresRefreshTokenValid || !isRefreshTokenValid) {
+            this.#clearCookies(res)
+            return;
+        }
+
+        const isValidAccessToken = tokensService.validateTokenExpires(tokens.accessToken)
+
+        if (!isValidAccessToken) {
+            const newAccessToken = tokensService.updateAccessToken(tokens.accessToken, tokens.refreshToken)
+            res.clearCookie('accessToken')
+            res.cookie('accessToken', newAccessToken)
+            res.send()
+        }
     }
 }
 
