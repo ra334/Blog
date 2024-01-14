@@ -9,7 +9,7 @@ type AuthDataType = {
 async function subbmiting(authData: AuthDataType){
     const response = await axios({
         method: 'post',
-        url: 'http://localhost:8080/api/registration',
+        url: 'http://localhost:8080/api/' + window.location.pathname,
         data: {
             login: authData.login,
             nickname: authData.nickname,
