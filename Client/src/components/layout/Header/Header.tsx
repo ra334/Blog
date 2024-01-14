@@ -2,20 +2,23 @@ import { Link } from "react-router-dom"
 import './HeaderStyle.css'
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from "jwt-decode";
+import { PayloadType, TokensType } from '../../../types/tokens-type'
+import verifyAccessToken from "../../../tools/verifyAccessToken";
 
 
 function Header() {
 
-    type PayloadType = {
-        id: string,
-        role: string,
-        nickname: string,
-        iat: number,
-        exp: number
-    }
-
     const [cookies] = useCookies();
-    const isSignIn = cookies.keys ? true : false
+    const isSignIn = Object.keys(cookies).length > 0 ? true : false
+
+    if (isSignIn) {
+        const tokens: TokensType = {
+            accessToken: cookies.accessToken,
+            refreshToken: cookies.refreshToken
+        }
+
+        verifyAccessToken.verifyTokens(tokens)
+    }
 
     function signIn(isSignIn: boolean) {
         if (isSignIn) {
