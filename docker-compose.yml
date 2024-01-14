@@ -1,0 +1,13 @@
+services:
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: "postgres"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "postgres"
+        ports:
+            - "5432:5432"
+    nodejs:
+        image: feral113/blog
+        ports:
+            - "8080:8080"
