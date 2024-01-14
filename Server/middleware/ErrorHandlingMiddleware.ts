@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction} from "express";
 import ApiError from "../error/ApiError";
 
 export default function (err: Error, req: Request, res: Response, next: NextFunction) {
