@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "nodemon app.ts",
     "test": "vitest",
+    "build": "tsc --project tsconfig.build.json",
+    "production": "npm install --production",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
