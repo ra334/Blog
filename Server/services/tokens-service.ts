@@ -21,6 +21,20 @@ class TokenService {
         return tokenData.exp >= currentTimestamp;
     }
 
+    vefiryToken(token: string) {
+        const privateKey = process.env.PRIVATE_KEY as jwt.Secret | jwt.GetPublicKeyOrSecret;
+
+        if (!privateKey) {
+            throw new Error('Private key is not defined');
+        }
+
+        try {
+            return jwt.verify(token, privateKey);
+        } catch (err) {
+            return false
+        }
+    }
+
     generateTokens(payload: Payload) {
         const privateKey = process.env.PRIVATE_KEY
 
@@ -48,8 +62,8 @@ class TokenService {
         return {accessToken, refreshToken}
     }
 
-    updateAccessToken(accessToken: string) {
-        const decodedToken = jwt.decode(accessToken) as jwt.JwtPayload
+    updateAccessToken(accessToken: string, refreshToken: string) {
+        const decodedToken = jwt.decode(refreshToken) as jwt.JwtPayload
 
         const privateKey = process.env.PRIVATE_KEY
 
