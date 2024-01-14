@@ -14,6 +14,7 @@ describe('Tokens service', () => {
 
     const payload = {
         id: userID,
+        nickname: user.nickname,
         role: 'user'
     }
 
@@ -44,7 +45,7 @@ describe('Tokens service', () => {
     })
 
     test('should update access token', () => {
-        const newAccessToken = tokensService.updateAccessToken(accessToken)
+        const newAccessToken = tokensService.updateAccessToken(accessToken, refreshToken)
 
         expect(newAccessToken).toBeTruthy()
     })
