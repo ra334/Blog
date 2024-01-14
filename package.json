@@ -1,0 +1,21 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Це репозиторій блогу де кожний може ввести свій блог",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-copy": "^4.0.1",
+    "gulp-exec": "^5.0.0"
+  },
+  "dependencies": {
+    "ncp": "^2.0.0"
+  }
+}
