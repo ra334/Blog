@@ -44,6 +44,7 @@ function Header() {
                 <Link className="header__link" to="/" >Main page</Link>
                 <Link className="header__link" to="/write">Write</Link>
                 <Link className="header__link" to="/articles">List articles</Link>
+                <Link className="header__link" to="/syntax">Article syntax</Link>
                 {signIn(isSignIn)}
             </nav>
         </header>
