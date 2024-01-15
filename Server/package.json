@@ -5,9 +5,11 @@
   "main": "app.ts",
   "scripts": {
     "dev": "nodemon app.ts",
+    "start": "node app.js",
+    "start:migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy && npm run start",
     "test": "vitest",
     "build": "tsc --project tsconfig.build.json",
-    "production": "npm install --production",
+    "production": "npm install --production && prisma generate",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
