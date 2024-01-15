@@ -2,9 +2,3 @@
     display: flex;
     justify-content: center;
 }
-
-.main__title {
-    margin-top: 10%;
-    font-weight: 700;
-    font-size: 50px;
-}
