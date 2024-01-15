@@ -44,8 +44,13 @@ function movePrismaSchema(cb) {
         .pipe(copy('./build'), { prefix: 2 })
 }
 
+function copyLogo(cb) {
+    return gulp.src('./assets/logo.png')
+    .pipe(copy('./build'), {prefix: 2})
+}
+
 function copyPackageFiles() {
-    return gulp.src(['package.json', 'package-lock.json'])
+    return gulp.src(['package.json', 'package-lock.json', '.env.production'])
         .pipe(copy('../server/build', { prefix: 1 }));
 }
 
@@ -53,12 +58,14 @@ gulp.task('copy-dist', gulp.series(clientDirectory, copyDistFolder));
 gulp.task('build-server', gulp.series(serverDirectory, buildServer));
 gulp.task('build-client', gulp.series(clientDirectory, buildClient));
 gulp.task('move-prisma-schema', gulp.series(serverDirectory, movePrismaSchema))
+gulp.task('move-user-default-logo', gulp.series(serverDirectory, copyLogo))
 
 gulp.task('default', gulp.series(
     'build-server',
     'build-client',
     'copy-dist',
     'move-prisma-schema',
+    'move-user-default-logo',
     copyPackageFiles,
     rootDirectory
 ));
