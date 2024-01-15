@@ -1,13 +1,21 @@
+version: '3'
 services:
-    postgres:
+    db:
         image: postgres
+        networks:
+            - mynetwork
         environment:
             POSTGRES_DB: "postgres"
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "postgres"
         ports:
             - "5432:5432"
-    nodejs:
-        image: feral113/blog
+    app:
+        image: feral113/blog:latest
+        networks:
+            - mynetwork
         ports:
             - "8080:8080"
+
+networks:
+    mynetwork:
