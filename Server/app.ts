@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { Request, Response } from 'express';
 import helmet from 'helmet'
 import cors = require('cors');
 import bodyParser = require('body-parser');
@@ -19,6 +20,10 @@ app.use(cookieParser())
 app.use('/api', apiRouter)
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(ErrorHandlingMiddleware)
+
+app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
 
 app.listen(8080, () => {
     console.log('listening http://localhost:8080')
