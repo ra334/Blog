@@ -4,6 +4,7 @@ import MainPage from './pages/Main/MainPage'
 import WriteArticle from './pages/WriteArticle/WriteArticle';
 import ListArticles from './pages/ListArticles.tsx/ListArticles';
 import SyntaxPage from './pages/Syntax/SyntaxPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 import {
     createBrowserRouter,
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
     {
         path: '/syntax',
         element: SyntaxPage()
+    },
+
+    {
+        path: '*',
+        element: ErrorPage()
     }
 ])
 
