@@ -1,7 +1,7 @@
 import './ErrorPage.css'
 import Header from '../../components/layout/Header/Header'
 
-function ErrorPage() {
+function PageNotFound() {
     return (
         <div className="container">
             <Header />
@@ -13,4 +13,4 @@ function ErrorPage() {
     )
 }
 
-export default ErrorPage
+export default PageNotFound
