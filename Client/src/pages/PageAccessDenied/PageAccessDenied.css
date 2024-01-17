@@ -1,0 +1,15 @@
+.accessdenied__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 800px;
+}
+
+.accessdenied__message {
+    margin: 50px 0;
+}
+
+.accessdenied__art {
+    font-size: 10px;
+}
