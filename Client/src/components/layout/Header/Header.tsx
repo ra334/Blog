@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom"
 import './HeaderStyle.css'
-import { useCookies } from 'react-cookie';
 import { jwtDecode } from "jwt-decode";
 import { PayloadType, TokensType } from '../../../types/tokens-type'
 import verifyAccessToken from "../../../tools/verifyAccessToken";
-
+import { getCookies } from "../../../tools/getCookies";
 
 function Header() {
-
-    const [cookies] = useCookies();
+    const cookies = getCookies()
     const isSignIn = Object.keys(cookies).length > 0 ? true : false
 
     if (isSignIn) {
