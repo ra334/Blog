@@ -16,6 +16,7 @@
     "gulp-exec": "^5.0.0"
   },
   "dependencies": {
-    "ncp": "^2.0.0"
+    "ncp": "^2.0.0",
+    "react-markdown": "^9.0.1"
   }
 }
