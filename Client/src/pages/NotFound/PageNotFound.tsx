@@ -1,4 +1,4 @@
-import './ErrorPage.css'
+import './PageNotFound.css'
 import Header from '../../components/layout/Header/Header'
 
 function PageNotFound() {
