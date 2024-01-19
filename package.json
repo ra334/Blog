@@ -4,6 +4,8 @@
   "description": "Це репозиторій блогу де кожний може ввести свій блог",
   "main": "index.js",
   "scripts": {
+    "client:dependencies": "cd Client && npm install",
+    "server:dependencies": "cd Server && npm install",
     "build": "gulp"
   },
   "keywords": [],
