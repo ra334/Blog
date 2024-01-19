@@ -5,12 +5,12 @@ const ncp = require('ncp').ncp;
 const path = require('path');
 
 function serverDirectory(cb) {
-    process.chdir(path.join(__dirname, 'server'));
+    process.chdir(path.join(__dirname, 'Server'));
     cb();
 }
 
 function clientDirectory(cb) {
-    process.chdir(path.join(__dirname, 'client'));
+    process.chdir(path.join(__dirname, 'Client'));
     cb();
 }
 
@@ -32,9 +32,9 @@ function buildClient() {
 }
 
 function copyDistFolder(cb) {
-    ncp('./dist', '../server/build/dist', (err) => {
+    ncp('./dist', '../Server/build/dist', (err) => {
         if (err) return console.error(err)
-        console.log('Dist folder copied to server/build directory')
+        console.log('Dist folder copied to Server/build directory')
     })
     cb()
 }
@@ -51,7 +51,7 @@ function copyLogo(cb) {
 
 function copyPackageFiles() {
     return gulp.src(['package.json', 'package-lock.json', '.env.production'])
-        .pipe(copy('../server/build', { prefix: 1 }));
+        .pipe(copy('../Server/build', { prefix: 1 }));
 }
 
 gulp.task('copy-dist', gulp.series(clientDirectory, copyDistFolder));
