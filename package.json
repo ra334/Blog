@@ -6,7 +6,7 @@
   "scripts": {
     "client:dependencies": "cd Client && npm install",
     "server:dependencies": "cd Server && npm install",
-    "build": "gulp"
+    "build": "client:dependencies && server:dependencies && gulp"
   },
   "keywords": [],
   "author": "",
