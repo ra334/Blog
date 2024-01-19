@@ -55,11 +55,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Docker Compose
-        run: |
-          docker-compose -f docker-compose.yml up -d
-          sleep 10
-          docker exec -it mycontainername npm run node:start:migrate:prod
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-      - name: Clean up
-        run: docker system prune -f
+      - name: Install dependencies and run Gulp build
+        run: |
+          npm install
+          npm run build
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+      - name: Run docker compose
+        run: docker compose up
