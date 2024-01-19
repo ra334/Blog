@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies and run Gulp build
         run: |
           npm install
-          npm run gulp build
+          npm run build
 
       - name: Build Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
