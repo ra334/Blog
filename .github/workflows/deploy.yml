@@ -46,27 +46,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build . --file Dockerfile -t feral113/blog:latest
-
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies and run Gulp build
-        run: |
-          npm install
-          npm run build
-
-      - name: Build Docker image
-        run: docker build . --file Dockerfile -t feral113/blog:latest
-
-      - name: Run docker compose
-        run: docker compose up
