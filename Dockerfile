@@ -5,4 +5,4 @@ EXPOSE 8080
 COPY Server/build /app
 
 RUN npm run production
-CMD ["npm", "run", "node:start:migrate:prod"]
+CMD ["sh", "-c", "sleep 10 && npm run node:start:migrate:prod"]
