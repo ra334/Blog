@@ -9,7 +9,7 @@ on:
 jobs:
   gulp:
     # runs-on: ubuntu-latest
-    runs-on: self hosted
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
   build:
     needs: gulp
     # runs-on: ubuntu-latest
-    runs-on: self hosted
+    runs-on: self-hosted
     
     steps:
       - name: Checkout repository
