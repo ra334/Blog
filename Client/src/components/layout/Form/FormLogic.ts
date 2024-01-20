@@ -1,19 +1,14 @@
 import axios from 'axios'
 
-type AuthDataType = {
-    login: string;
-    nickname: string;
-    password: string;
-}
 
-async function subbmiting(authData: AuthDataType){
+async function subbmiting(login: string, nickname: string, password: string){
     const response = await axios({
         method: 'post',
         url: 'http://localhost:8080/api/' + window.location.pathname,
         data: {
-            login: authData.login,
-            nickname: authData.nickname,
-            password: authData.password
+            login,
+            nickname,
+            password
         },
         withCredentials: true,
     });
@@ -21,6 +16,8 @@ async function subbmiting(authData: AuthDataType){
     if (response.status === 200) {
         window.history.pushState({}, 'undefined', '/')
         window.location.reload()
+    } else {
+        return {code: response.status, message: response.data.message}
     }
 }
 
