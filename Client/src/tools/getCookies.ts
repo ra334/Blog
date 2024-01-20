@@ -2,11 +2,11 @@ interface TokensInterface {
     [key: string]: string
 }
 
-export function getCookieValue(key: string): string | null {
+export function getCookieValue(key: string): string {
     const cookiesString = document.cookie
     const regex = new RegExp(`${key}=([^;]+)`);
     const match = cookiesString.match(regex);
-    return match ? match[1] : null;
+    return match ? match[1] : '';
 }
 
 export function getCookies(): TokensInterface | null {
