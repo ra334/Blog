@@ -94,7 +94,7 @@ class UserService {
         this.#passwordLength(password)
         
         if (await this.#isUserExist(nickname)) {
-            throw new Error('User is already exist');
+            throw new Error(`User ${nickname} already exists`);
         }
 
         const userID = uuidv4()
