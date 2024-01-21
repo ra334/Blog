@@ -9,8 +9,13 @@ type Payload = {
 }
 
 class TokenService {
-    validateTokenExpires(token: string) {
+    decodeToken(token: string) {
         const tokenData = jwt.decode(token) as jwt.JwtPayload
+        return tokenData
+    }
+
+    validateTokenExpires(token: string) {
+        const tokenData = this.decodeToken(token)
 
         if (!tokenData || !tokenData.exp) {
             return false;
@@ -63,7 +68,7 @@ class TokenService {
     }
 
     updateAccessToken(accessToken: string, refreshToken: string) {
-        const decodedToken = jwt.decode(refreshToken) as jwt.JwtPayload
+        const decodedToken = this.decodeToken(refreshToken)
 
         const privateKey = process.env.PRIVATE_KEY
 
