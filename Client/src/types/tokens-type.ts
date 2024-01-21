@@ -1,12 +1,12 @@
 export type PayloadType = {
-    id: string,
-    role: string,
-    nickname: string,
-    iat: number,
-    exp: number
+	id: string
+	role: string
+	nickname: string
+	iat: number
+	exp: number
 }
 
-export type TokensType = {
-    accessToken: string;
-    refreshToken: string;
+export interface TokensType {
+	accessToken: string
+	refreshToken: string
 }

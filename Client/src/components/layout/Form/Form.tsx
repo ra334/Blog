@@ -1,62 +1,109 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../UI/Button/Button';
-import ErrorComponent from '../../UI/ErrorComponent/ErrorComponent';
+import ErrorComponent from '../../UI/ErrorComponent/ErrorComponent'
 import './Form.css'
 
-import subbmiting from './FormLogic';
-import { addLogin, addNickname, addPassword } from '../../../store/slices/authSlice';
-import { useState } from 'react';
+import subbmiting from './FormLogic'
+import { useState } from 'react'
 
 type FormProps = {
-    h1Text: string;
-};
-
-function Form(props: FormProps) {
-
-    const dispatch = useDispatch()
-    const authData = useSelector((state: any) => state.auth)
-    const [error, setError] = useState<string | null>(null);
-
-
-    async function handleSubmit() {
-        try {
-            await subbmiting(authData, )
-        } catch(err: any) {
-            setError(err.message)
-        }
-    }
-
-    return (
-        <div className="form__wrapper">
-            <h1 className="title">{props.h1Text}</h1>
-            {error && <ErrorComponent message={error} />}
-            <div className="input__wrapper">
-                <input
-                    type="text"
-                    placeholder="Login"
-                    value={authData.login}
-                    onChange={(e) => dispatch(addLogin(e.target.value))}
-                />
-            </div>
-            <div className="input__wrapper">
-                <input
-                    type="text"
-                    placeholder="Nickname"
-                    value={authData.nickname}
-                    onChange={(e) => dispatch(addNickname(e.target.value))}
-                />
-            </div>
-            <div className="input__wrapper">
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={authData.password}
-                    onChange={(e) => dispatch(addPassword(e.target.value))}
-                />
-            </div>
-            <Button text={props.h1Text} onClick={handleSubmit}/>
-        </div>
-    );
+	h1Text: string
 }
 
-export default Form;
+function Form(props: FormProps) {
+	const [login, setLogin] = useState('')
+	const [nickname, setNickname] = useState('')
+	const [password, setPassword] = useState('')
+	const [errorMsg, setErrorMsg] = useState('')
+
+	async function handleSubmit(e: React.FormEvent) {
+		e.preventDefault()
+
+		try {
+			await subbmiting(login, nickname, password)
+		} catch (err: any) {
+			const errorMessage = err.response.data.message
+
+			let borderColor = ''
+
+			if (errorMessage === 'Invalid login') {
+				borderColor = 'red'
+				document.documentElement.style.setProperty(
+					'--login-border-color',
+					borderColor,
+				)
+			}
+
+			if (errorMessage === 'Invalid nickname') {
+				borderColor = 'red'
+				document.documentElement.style.setProperty(
+					'--nickname-border-color',
+					borderColor,
+				)
+			}
+
+			if (errorMessage === 'Invalid password') {
+				borderColor = 'red'
+				document.documentElement.style.setProperty(
+					'--password-border-color',
+					borderColor,
+				)
+			}
+
+			setErrorMsg(errorMessage)
+		}
+	}
+
+	return (
+		<form onSubmit={handleSubmit} className="form__wrapper">
+			<h1 className="title">{props.h1Text}</h1>
+			<ErrorComponent message={errorMsg} />
+			<div className="input__wrapper">
+				<input
+					style={{ borderColor: 'var(--login-border-color)' }}
+					type="text"
+					placeholder="Login"
+					value={login}
+					onChange={e => {
+						setLogin(e.target.value)
+						document.documentElement.style.setProperty(
+							'--login-border-color',
+							'inherit',
+						)
+					}}
+				/>
+			</div>
+			<div className="input__wrapper">
+				<input
+					style={{ borderColor: 'var(--nickname-border-color)' }}
+					type="text"
+					placeholder="Nickname"
+					value={nickname}
+					onChange={e => {
+						setNickname(e.target.value)
+						document.documentElement.style.setProperty(
+							'--nickname-border-color',
+							'inherit',
+						)
+					}}
+				/>
+			</div>
+			<div className="input__wrapper">
+				<input
+					style={{ borderColor: 'var(--password-border-color)' }}
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={e => {
+						setPassword(e.target.value)
+						document.documentElement.style.setProperty(
+							'--password-border-color',
+							'inherit',
+						)
+					}}
+				/>
+			</div>
+			<button type="submit">{props.h1Text}</button>
+		</form>
+	)
+}
+
+export default Form

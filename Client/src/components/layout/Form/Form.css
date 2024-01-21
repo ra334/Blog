@@ -1,23 +1,23 @@
 input {
-    display: block;
-    background-color: inherit;
-    border-radius: 10px;
-    color: inherit;
-    border-color: inherit;
-    margin: 10px 0;
-    padding: 5px 10px;
+	display: block;
+	background-color: inherit;
+	border-radius: 10px;
+	color: inherit;
+	border-color: inherit;
+	margin: 10px 0;
+	padding: 5px 10px;
 }
 
 input::placeholder {
-    text-align: center;
+	text-align: center;
 }
 
 input:focus {
-    color: white;
+	color: white;
 }
 
 .form__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
