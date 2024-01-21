@@ -1,4 +1,5 @@
 import * as express from 'express'
+require('express-async-errors')
 import { Request, Response } from 'express'
 import helmet from 'helmet'
 import cors = require('cors')
