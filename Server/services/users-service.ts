@@ -16,7 +16,6 @@ class UserService {
 
     #loginLength(login: string) {
         if (login.length > 50) {
-            // throw new Error('Login is too long')
             throw ApiError.badRequest('Login is too long')
         } else {
             return true
@@ -64,14 +63,20 @@ class UserService {
         this.#passwordLength(password)
         await this.#isUserExist(nickname)
 
+        const isLoginValid = await usersModel.getUserByLogin(login)
+
+        if (!isLoginValid) {
+            throw ApiError.badRequest('Invalid login')
+        }
+
         const user = await usersModel.getUserByNickname(nickname)
         
         if (!user) {
-            throw ApiError.badRequest('User not found!')
+            throw ApiError.badRequest('Invalid nickname')
         }
     
         if (!comparePassword(password, user.password)) {
-            throw ApiError.badRequest('Password invalid!')
+            throw ApiError.badRequest('Invalid password')
         }
     
         const userID = user.id;
@@ -89,7 +94,7 @@ class UserService {
         this.#passwordLength(password)
         
         if (await this.#isUserExist(nickname)) {
-            throw new Error('User is already exist!');
+            throw new Error('User is already exist');
         }
 
         const userID = uuidv4()
