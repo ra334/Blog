@@ -3,7 +3,6 @@ import AuthPage from './pages/Auth/AuthPage'
 import MainPage from './pages/Main/MainPage'
 import WriteArticlePage from './pages/WriteArticle/WriteArticle'
 import ListArticlesPage from './pages/ListArticles.tsx/ListArticles'
-import SyntaxPage from './pages/Syntax/SyntaxPage'
 import NotFoundPage from './pages/NotFound/PageNotFound'
 import AccessDeniedPage from './pages/AccessDenied/PageAccessDenied'
 
@@ -38,11 +37,6 @@ const router = createBrowserRouter([
 	{
 		path: '/articles',
 		element: <ListArticlesPage />,
-	},
-
-	{
-		path: '/syntax',
-		element: <SyntaxPage />,
 	},
 
 	{

@@ -21,9 +21,6 @@ function Header() {
 					<Link className="header__link" to="/articles">
 						List articles
 					</Link>
-					<Link className="header__link" to="/syntax">
-						Article syntax
-					</Link>
 					<div className="signIn">
 						<Link className="header__link" to="/login">
 							SignIn
@@ -63,9 +60,6 @@ function Header() {
 						<Link className="header__link" to="/articles">
 							List articles
 						</Link>
-						<Link className="header__link" to="/syntax">
-							Article syntax
-						</Link>
 						<Link className="header__link" to="/account">
 							{accountName}
 						</Link>
@@ -74,34 +68,6 @@ function Header() {
 			)
 		}
 	}
-
-	return (
-		<header>
-			<nav className="nav">
-				<Link className="header__link" to="/">
-					Main page
-				</Link>
-				<Link className="header__link" to="/write">
-					Write
-				</Link>
-				<Link className="header__link" to="/articles">
-					List articles
-				</Link>
-				<Link className="header__link" to="/syntax">
-					Article syntax
-				</Link>
-				<div className="signIn">
-					<Link className="header__link" to="/login">
-						SignIn
-					</Link>
-					<div className="signIn__slash">/</div>
-					<Link className="header__link" to="/registration">
-						Registration
-					</Link>
-				</div>
-			</nav>
-		</header>
-	)
 }
 
 export default Header
