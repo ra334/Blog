@@ -1,5 +1,12 @@
 .article {
 	width: 100%;
+	height: 100vh;
+}
+
+.article__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .article__title {
@@ -17,20 +24,15 @@
 }
 
 .article__textarea {
-	width: 815px;
+	width: 100%;
 	height: 650px;
 	font-size: 30px;
-
+	resize: none;
+    overflow-y: hidden;
 	border: 1px solid white;
 	border-radius: 10px;
 	background-color: inherit;
 	color: white;
-}
-
-.article__content-wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 }
 
 .article__button {
@@ -41,4 +43,33 @@
 
 Button {
 	margin: 10px;
+}
+
+.article__content-input::placeholder{
+	text-align: left;
+	font-size: 35px;
+	color: inherit;
+}
+
+.article__content-input {
+	all: unset;
+	padding: 20px;
+	font-size: 35px;
+	z-index: 3;
+}
+
+.article__paragraph-item::placeholder {
+	color: inherit;
+}
+
+
+.article__paragraph-item {
+	all: unset;
+	overflow: hidden;
+	resize: none;
+	overflow-wrap: break-word;
+	min-width: 100%;
+	font-size: 35px;
+	padding: 20px;
+	position: relative;
 }

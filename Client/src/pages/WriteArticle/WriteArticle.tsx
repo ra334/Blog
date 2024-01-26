@@ -6,42 +6,62 @@ import { getCookieValue } from '../../tools/getCookies'
 import PageAccessDenied from '../AccessDenied/PageAccessDenied'
 
 function WriteArticle() {
-	const [text, setText] = useState('')
+	const [title, setTitle] = useState<string>('')
+	const [text, setText] = useState<string>('')
 
 	const accessToken = getCookieValue('accessToken')
 	if (!accessToken) return <PageAccessDenied />
 
-	const handlePreviewClick = () => {
-		console.log('Preview clicked:', 'text')
+	function handleSave(event: React.FormEvent): void {
+		event.preventDefault()
+		writeArticleLogic.saveArticle(accessToken, title, text)
 	}
 
-	const handleSaveClick = () => {
-		const firstLine = text.split('\n')[0]
+	function handleTitleChange(
+		event: React.ChangeEvent<HTMLInputElement>
+	): void {
+		setTitle(event.target.value)
+	}
 
-		writeArticleLogic.saveArticle(accessToken, firstLine, text)
+	function handleTextChange(
+		event: React.ChangeEvent<HTMLTextAreaElement>
+	): void {
+		setText(event.target.value)
+		event.target.style.height = 'auto'
+		event.target.style.height = `${event.target.scrollHeight}px`
 	}
 
 	return (
-		<div className="container">
-			<Header />
-			<div className="article">
-				<div className="article__title">
-					<h1>Write new article</h1>
-				</div>
-				<div className="article__content-wrapper">
-					<textarea
-						className="article__textarea"
-						id="textarea"
-						value={text}
-						onChange={e => setText(e.target.value)}
-					></textarea>
-				</div>
-				<div className="article__button">
-					<button onClick={handlePreviewClick}>Preview</button>
-					<button onClick={handleSaveClick}>Save and publish</button>
+		<>
+			<div className="container">
+				<Header />
+				<div className="article">
+					<div className="article__title">
+						<h1>Write new article</h1>
+					</div>
+					<div className="article__content">
+						<input
+							onChange={handleTitleChange}
+							placeholder="Title"
+							type="text"
+							className="article__content-input"
+						/>
+						<div className="article__content-paragraphs">
+							<textarea
+								onChange={handleTextChange}
+								placeholder="Write your text here"
+								className="article__paragraph-item"
+							></textarea>
+						</div>
+						<div className="article__button">
+							<button onClick={handleSave}>
+								Save and publish
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 
