@@ -9,8 +9,6 @@ function Main() {
 			<main className="main">
 				<TypeAnimation
 					sequence={[
-						'Write article with markdown',
-						3000,
 						'Write blog for free',
 						3000,
 						'Create your own blog',
