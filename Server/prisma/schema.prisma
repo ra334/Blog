@@ -34,6 +34,7 @@ model Posts {
 	id 				String		@id 
 	user			Users		@relation(fields: [user_id], references: [id])
 	user_id			String
+	created_at		DateTime	@default(now())
 	title			String		@unique
 	text			String
 	photos			Photos[]
