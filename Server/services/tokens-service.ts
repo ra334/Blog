@@ -26,7 +26,7 @@ class TokenService {
         return tokenData.exp >= currentTimestamp;
     }
 
-    vefiryToken(token: string) {
+    verifyToken(token: string) {
         const privateKey = process.env.PRIVATE_KEY as jwt.Secret | jwt.GetPublicKeyOrSecret;
 
         if (!privateKey) {
@@ -67,7 +67,7 @@ class TokenService {
         return {accessToken, refreshToken}
     }
 
-    updateAccessToken(accessToken: string, refreshToken: string) {
+    updateAccessToken(refreshToken: string) {
         const decodedToken = this.decodeToken(refreshToken)
 
         const privateKey = process.env.PRIVATE_KEY
@@ -82,9 +82,9 @@ class TokenService {
             nickname: decodedToken.nickname
         }
 
-        const token = jwt.sign(payload, privateKey, { expiresIn: '30m' })
+        const accessToken = jwt.sign(payload, privateKey, { expiresIn: '30m' })
 
-        return token
+        return accessToken
     }
 
     async removeExpiredTokens(userID: string) {
