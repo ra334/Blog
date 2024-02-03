@@ -6,10 +6,9 @@ import { getCookies } from '../../../tools/getCookies'
 
 function Header() {
 	const cookies = getCookies()
-	const isSignIn = Object.keys(cookies).length > 0
+	const isSignIn = cookies && Object.keys(cookies).length > 0
 
 	if (isSignIn) {
-
 		if (cookies.accessToken) {
 			const payload: PayloadType = jwtDecode(cookies.accessToken)
 			const accountName = payload.nickname

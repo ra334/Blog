@@ -2,7 +2,10 @@ import axios from "axios";
 import { getCookieValue } from "../tools/getCookies";
 import { createContext, useContext, useEffect, useMemo, useState, useRef } from "react";
 
-const AuthContext = createContext('');
+const AuthContext = createContext<{ token: string; setToken: (newToken: string) => void }>({
+    token: '',
+    setToken: () => {}
+});
 
 async function tryUpdateToken(refreshToken: string, accessToken: string) {
     const response = await axios({
@@ -39,22 +42,18 @@ async function checkIsAccessTokenValid(accessToken: string) {
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
     const [accessToken, setAccessToken_] = useState(getCookieValue('accessToken'));
-    const [refreshToken, setRefreshToken_] = useState(getCookieValue('refreshToken'));
+    const [refreshToken] = useState(getCookieValue('refreshToken'));
     const updatingToken = useRef(false)
 
     function setAccessToken(newToken: string) {
         setAccessToken_(newToken);
     }
 
-    function setRefreshToken(newToken: string) {
-        setRefreshToken_(newToken);
-    }
-
     useEffect(() => {
         async function fetchData() {
             if (accessToken) {
                 const isAccessTokenValid = await checkIsAccessTokenValid(accessToken);
-                
+
                 if (!isAccessTokenValid) {
                     if (!updatingToken.current) {
                         updatingToken.current = true
@@ -67,7 +66,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                         }
                     }
                 }
-                
+
                 axios.defaults.headers.common["Authorization"] = accessToken;
             } else {
                 delete axios.defaults.headers.common['Authorization'];
@@ -75,11 +74,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         fetchData()
-    }, [accessToken, setAccessToken]);
+    }, [accessToken, refreshToken]);
 
     const contextValue = useMemo(() => ({
-        accessToken,
-        setAccessToken
+        token: accessToken,
+        setToken: setAccessToken
     }), [accessToken]);
 
     return (

@@ -7,8 +7,13 @@ import getArticles from './ListArticles-logic';
 
 import arrow from '../../assets/right-arrow.png'
 
+interface ArticleInterface {
+    title: string;
+    text: string;
+}
+
 function ListArticles() {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState<ArticleInterface[]>([]);
 
     useEffect(() => {
         async function fetchData() {
