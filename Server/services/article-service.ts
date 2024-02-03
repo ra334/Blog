@@ -30,9 +30,19 @@ class ArticleService {
         }
     }
 
-    async getArticles(userID: string) {
+    async getArticles(userID: string, skip: number, take: number) {
         try {
-            const articles = await postsModel.getPosts(userID)
+            const articles = await postsModel.getPosts(userID, skip, take)
+            return articles
+        } catch (e) {
+            console.error(e)
+            return false
+        }
+    }
+
+    async getLastArticles(skip: number, take: number) {
+        try {
+            const articles = await postsModel.getLastPosts(skip, take)
             return articles
         } catch (e) {
             console.error(e)
