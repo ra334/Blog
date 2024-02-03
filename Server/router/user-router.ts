@@ -22,7 +22,15 @@ router.post('/registration', (req: Request, res: Response, next: NextFunction) =
 
 router.post('/refresh', (req: Request, res: Response, next: NextFunction) => {
     try {
-        userController.refreshToken(req, res)
+        userController.refreshToken(req, res, next)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.post('/verify', (req: Request, res: Response, next: NextFunction) => {
+    try {
+        userController.validateAccessToken(req, res, next)
     } catch (err) {
         next(err)
     }

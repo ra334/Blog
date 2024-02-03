@@ -4,8 +4,12 @@ import tokensService from "../services/tokens-service";
 import { TokensType } from '../types/tokens-type'
 class UserController {
     #sendCookies(res: Response, tokens: TokensType) {
-        res.cookie('accessToken', tokens.accessToken)
-        res.cookie('refreshToken', tokens.refreshToken)
+        const currentTime = new Date().getTime();
+        const accessTokenCookieExpires = currentTime + 30 * 60 * 1000 // 30 min
+        const refreshTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000 // 30 days
+        
+        res.cookie('accessToken', tokens.accessToken, {expires: new Date(accessTokenCookieExpires)})
+        res.cookie('refreshToken', tokens.refreshToken, {expires: new Date(refreshTokenCookieExpires)})
         res.send()
     }
 
@@ -35,34 +39,51 @@ class UserController {
         }
     }
 
-    async logout(req: Request, res: Response) {
-        const tokens: TokensType = req.body
+    async refreshToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const tokens: TokensType = req.body
 
-        const isAccessTokenValid = tokensService.vefiryToken(tokens.accessToken)
-        if (isAccessTokenValid) {
-            this.#clearCookies(res)
+            const isRefreshTokenValid = tokensService.verifyToken(tokens.refreshToken)
+
+            const isExpiresRefreshTokenValid= tokensService.validateTokenExpires(tokens.refreshToken)
+
+            if (!isExpiresRefreshTokenValid || !isRefreshTokenValid) {
+                this.#clearCookies(res)
+                return;
+            }
+
+            const isValidAccessToken = tokensService.validateTokenExpires(tokens.accessToken)
+
+            if (!isValidAccessToken) {
+                const newAccessToken = tokensService.updateAccessToken(tokens.refreshToken)
+                res.clearCookie('accessToken')
+
+                const currentTime = new Date().getTime();
+                const accessTokenCookieExpires = currentTime + 30 * 60 * 1000
+
+                res.cookie('accessToken', newAccessToken, {expires: new Date(accessTokenCookieExpires)})
+                res.status(200).redirect(req.path)
+            }
+
+            next()
+        } catch (err) {
+            next(err)
         }
     }
 
-    async refreshToken(req: Request, res: Response) {
-        const tokens: TokensType = req.body
+    async validateAccessToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const accessToken = req.body.accessToken
+            const isAccessTokenValid = tokensService.verifyToken(accessToken)
 
-        const isRefreshTokenValid = tokensService.vefiryToken(tokens.refreshToken)
+            if (!isAccessTokenValid) {
+                res.json({valid: false})
+            } else {
+                res.json({valid: true})
+            }
 
-        const isExpiresRefreshTokenValid= tokensService.validateTokenExpires(tokens.refreshToken)
-
-        if (!isExpiresRefreshTokenValid || !isRefreshTokenValid) {
-            this.#clearCookies(res)
-            return;
-        }
-
-        const isValidAccessToken = tokensService.validateTokenExpires(tokens.accessToken)
-
-        if (!isValidAccessToken) {
-            const newAccessToken = tokensService.updateAccessToken(tokens.accessToken, tokens.refreshToken)
-            res.clearCookie('accessToken')
-            res.cookie('accessToken', newAccessToken)
-            res.send()
+        } catch (err) {
+            next(err)
         }
     }
 }
