@@ -4,7 +4,7 @@ class WriteArticleLogic {
 	async saveArticle(accessToken: string, title: string, text: string) {
 		const response = await axios({
 			method: 'post',
-			url: 'http://localhost:8080/api/create',
+			url: 'http://localhost:5050/api/articles/create',
 			data: {
 				accessToken,
 				title,
