@@ -6,8 +6,8 @@ import { getCookieValue } from '../../tools/getCookies'
 import PageAccessDenied from '../AccessDenied/PageAccessDenied'
 
 function WriteArticle() {
-	const [title, setTitle] = useState<string>('')
-	const [text, setText] = useState<string>('')
+	const [title, setTitle] = useState('')
+	const [text, setText] = useState('')
 
 	const accessToken = getCookieValue('accessToken')
 	if (!accessToken) return <PageAccessDenied />
