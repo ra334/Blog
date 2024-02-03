@@ -5,8 +5,7 @@ import articleController from "../controller/article-controller"
 
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('ok')
-        articleController.getArticles(req, res)
+        articleController.getArticles(req, res, next)
     } catch (err) {
         next(err)
     }
@@ -14,7 +13,7 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
     try {
-        articleController.getArticles(req, res)
+        articleController.getArticles(req, res, next)
     } catch (err) {
         next(err)
     }
@@ -30,7 +29,7 @@ router.post('/create', (req: Request, res: Response, next: NextFunction) => {
 
 router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
     try {
-        articleController.deleteArticle(req, res)
+        articleController.deleteArticle(req, res, next)
     } catch (err) {
         next(err)
     }

@@ -43,13 +43,31 @@ class PostModel {
         }
     }
 
-    async getPosts(userID: string) {
+    async getPosts(userID: string, skip: number, take: number) {
         try {
             await prisma.$connect()
             const posts = await prisma.posts.findMany({
-                where: {user_id: userID}
+                where: {user_id: userID},
+                skip,
+                take
             })
 
+            return posts
+        } catch(e) {
+            console.error(e)
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async getLastPosts(skip: number, take: number) {
+        try {
+            await prisma.$connect()
+            const posts = await prisma.posts.findMany({
+                skip,
+                take
+            })
             return posts
         } catch(e) {
             console.error(e)
