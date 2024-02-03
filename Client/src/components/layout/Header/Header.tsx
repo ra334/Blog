@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import './HeaderStyle.css'
 import { jwtDecode } from 'jwt-decode'
-import { PayloadType, TokensType } from '../../../types/tokens-type'
-import verifyAccessToken from '../../../tools/verifyAccessToken'
+import { PayloadType } from '../../../types/tokens-type'
 import { getCookies } from '../../../tools/getCookies'
 
 function Header() {
@@ -10,12 +9,6 @@ function Header() {
 	const isSignIn = Object.keys(cookies).length > 0
 
 	if (isSignIn) {
-		const tokens: TokensType = {
-			accessToken: cookies.accessToken,
-			refreshToken: cookies.refreshToken,
-		}
-
-		verifyAccessToken.verifyTokens(tokens)
 
 		if (cookies.accessToken) {
 			const payload: PayloadType = jwtDecode(cookies.accessToken)
