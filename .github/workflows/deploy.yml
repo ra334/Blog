@@ -14,7 +14,7 @@ jobs:
   deploy:
     environment:
         name: github-pages
-        url: https://github.ra334.blog.com
+        url: http://github.ra334.blog.com
 
     runs-on: ubuntu-latest
 
@@ -22,5 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-    #   - name: Deploy with Docker Compose
-    #     run: docker compose up
+      - name: Deploy with Docker Compose
+        run: docker compose up
+        wait-on: http://localhost
