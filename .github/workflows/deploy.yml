@@ -22,5 +22,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy with Docker Compose
-        run: docker compose up
+    #   - name: Deploy with Docker Compose
+    #     run: docker compose up
