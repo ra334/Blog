@@ -12,6 +12,10 @@ concurrency:
 
 jobs:
   deploy:
+    environment:
+        name: github-pages
+        url: blogpage
+
     runs-on: ubuntu-latest
 
     steps:
