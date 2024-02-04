@@ -1,6 +1,6 @@
 FROM node
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 80:5050
 
 COPY Server/build /app
 
