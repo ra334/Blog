@@ -1,5 +1,4 @@
 import * as express from 'express'
-// import http = require('https')
 require('express-async-errors')
 import { Request, Response } from 'express'
 import helmet from 'helmet'
@@ -10,7 +9,6 @@ import userRouter from './router/user-router'
 import articleRouter from './router/article-router'
 import ErrorHandlingMiddleware from './middleware/ErrorHandlingMiddleware'
 import path = require('path')
-// import fs = require('fs')
 const app = express()
 
 app.use(
@@ -19,11 +17,6 @@ app.use(
         credentials: true,
     }),
 );
-
-// const privateKey = fs.readFileSync('./certificates/privateKey.key').toString()
-// const certificate = fs.readFileSync('./certificates/certificate.pem').toString()
-
-// const credentials = {key: privateKey, cert: certificate}
 
 app.use(helmet())
 app.use(bodyParser())
@@ -36,8 +29,6 @@ app.use(ErrorHandlingMiddleware)
 app.get('*', (req: Request, res: Response) => {
 	res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
-
-// http.createServer(credentials, app).listen(443)
 
 app.listen(5050, () => {
     console.log('listening on port 5050')
