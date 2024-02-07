@@ -15,7 +15,7 @@ services:
         networks:
             - mynetwork
         ports:
-            - "5050:5050"
+            - "5050:443"
         depends_on:
             - db
 
