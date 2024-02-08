@@ -9,7 +9,7 @@
     "start:migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy && npm run start",
     "test": "vitest",
     "build": "tsc --project tsconfig.build.json",
-    "production": "npm install --production && prisma generate",
+    "production": "npm install --production && prisma generate && npx prisma migrate dev --create-only",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
