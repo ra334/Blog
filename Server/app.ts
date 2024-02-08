@@ -31,5 +31,5 @@ app.get('*', (req: Request, res: Response) => {
 })
 
 app.listen(5050, () => {
-    console.log('listening on port 5050')
+    console.log('App starts on http://localhost:5050')
 })
