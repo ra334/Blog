@@ -25,17 +25,6 @@ jobs:
           npm install
           npm run build
 
-      - name: Create certificates
-        run: |
-          mkdir Server/build/certificates
-          touch Server/build/certificates/certificate.pem
-          touch Server/build/certificates/privateKey.key
-
-      - name: Write data in certificates
-        run: |
-          echo "${{secrets.SSL_CERTIFICATE}}" | cat >> Server/build/certificates/certificate.pem
-          echo "${{secrets.SSL_PRIVATE_KEY}}" | cat >> Server/build/certificates/privateKey.key
-
       - name: Build Docker image
         run: docker build . --file Dockerfile -t feral113/blog:latest
 
