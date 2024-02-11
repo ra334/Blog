@@ -8,7 +8,6 @@ const AuthContext = createContext<{ token: string; setToken: (newToken: string) 
 });
 
 const host: string = import.meta.env.VITE_SERVER_HOST
-console.log(host)
 
 async function tryUpdateToken(refreshToken: string, accessToken: string) {
     const response = await axios({
@@ -60,8 +59,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                 if (!isAccessTokenValid) {
                     if (!updatingToken.current) {
                         updatingToken.current = true
-
-                        console.log(updatingToken.current)
 
                         const newAccessToken =  await tryUpdateToken(refreshToken, accessToken);
                         if (newAccessToken) {
