@@ -9,6 +9,7 @@ import arrow from '../../assets/right-arrow.png'
 import { Link } from 'react-router-dom';
 
 interface ArticleInterface {
+    id: string;
     title: string;
     text: string;
 }

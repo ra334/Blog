@@ -20,12 +20,16 @@ function ArticlePage() {
 
     useEffect(() => {
         async function response() {
-            const response = await getArticle(id)
-            const data = response.data as ResponseData
+            if (id) {
+                const response = await getArticle(id)
+                if (response) {
+                    const data = response.data as ResponseData
 
-            setTitle(data.title)
-            setText(data.text)
-            setDate(data.created_at)
+                    setTitle(data.title)
+                    setText(data.text)
+                    setDate(data.created_at)
+                }
+            }
         }
 
         response()
@@ -35,6 +39,7 @@ function ArticlePage() {
         <div className="container">
             <Header />
             <h1>{title}</h1>
+            <div className="date">{date}</div>
             <p>{text}</p>
         </div>
     )
