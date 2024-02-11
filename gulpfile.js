@@ -58,7 +58,6 @@ gulp.task('default', gulp.series(
     'build-server',
     'build-client',
     'copy-dist',
-    'move-prisma-schema',
     'move-user-default-logo',
     copyPackageFiles,
     rootDirectory
