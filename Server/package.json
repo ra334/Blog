@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.ts",
     "start": "node app.js",
-    "start:migrate:prod": "prisma migrate dev --name init && npx prisma migrate deploy && npm run start",
+    "start:migrate:prod": "npx prisma migrate deploy && npm run start",
     "test": "vitest",
     "build": "tsc --project tsconfig.build.json",
     "production": "npm install --production && prisma generate",
