@@ -5,6 +5,7 @@ import articleController from "../controller/article-controller"
 
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log('not ok')
         articleController.getArticles(req, res, next)
     } catch (err) {
         next(err)
@@ -13,7 +14,7 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
     try {
-        articleController.getArticles(req, res, next)
+        articleController.getArticle(req, res)
     } catch (err) {
         next(err)
     }

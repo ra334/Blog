@@ -4,6 +4,7 @@ import MainPage from '../pages/Main/MainPage'
 import WriteArticlePage from '../pages/WriteArticle/WriteArticle'
 import ListArticlesPage from '../pages/ListArticles.tsx/ListArticles'
 import NotFoundPage from '../pages/NotFound/PageNotFound'
+import ArticlePage from '../pages/Article/ArticlePage'
 
 import { ProtectedRouter } from './protected-router'
 
@@ -24,6 +25,11 @@ function Routes() {
 		{
 			path: '/registration',
 			element: <AuthPage action={'registration'} />,
+		},
+
+		{
+			path: '/articles/:id',
+			element: <ArticlePage />
 		},
 
 		{

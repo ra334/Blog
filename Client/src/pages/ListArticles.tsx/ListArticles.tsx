@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import getArticles from './ListArticles-logic';
 
 import arrow from '../../assets/right-arrow.png'
+import { Link } from 'react-router-dom';
 
 interface ArticleInterface {
     title: string;
@@ -43,9 +44,9 @@ function ListArticles() {
                     <h1 className='listarticle__title-item'>Last articles</h1>
                 </div>
                 <div className="listarticle__content">
-                    {articles.map((article, index) => ( // Corrected mapping
+                    {articles.map((article, index) => (
                         <div className="listarticle__content-item" key={index}>
-                            <h3 className="listarticle__content-title">{article.title}</h3>
+                            <Link className="listarticle__content-title" to={article.id}>{article.title}</Link>
                             <p className="listarticle__content-preview">{article.text}</p>
                         </div>
                     ))}
