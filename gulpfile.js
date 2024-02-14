@@ -45,7 +45,7 @@ function copyLogo(cb) {
 }
 
 function copyPackageFiles() {
-    return gulp.src(['package.json', 'package-lock.json', '.env'])
+    return gulp.src(['package.json', 'package-lock.json'])
         .pipe(copy('../Server/build', { prefix: 1 }));
 }
 
