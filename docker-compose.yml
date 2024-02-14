@@ -2,6 +2,8 @@ version: '3'
 services:
     db:
         image: postgres
+        networks:
+            - mynetwork
         environment:
             POSTGRES_DB: "postgres"
             POSTGRES_USER: "postgres"
@@ -10,7 +12,12 @@ services:
             - "5432:5432"
     app:
         image: feral113/blog:latest
+        networks:
+            - mynetwork
         ports:
             - "5050:5050"
         depends_on:
             - db
+
+networks:
+    mynetwork:
