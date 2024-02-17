@@ -20,10 +20,6 @@ class WriteArticleLogic {
 
 		return false
 	}
-
-	preview() {
-		console.log('preview')
-	}
 }
 
 export default new WriteArticleLogic()

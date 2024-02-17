@@ -8,13 +8,20 @@ import PageAccessDenied from '../AccessDenied/PageAccessDenied'
 function WriteArticle() {
 	const [title, setTitle] = useState('')
 	const [text, setText] = useState('')
+	const [success, setSuccess] = useState(false)
 
 	const accessToken = getCookieValue('accessToken')
 	if (!accessToken) return <PageAccessDenied />
 
-	function handleSave(event: React.FormEvent): void {
+	async function handleSave(event: React.FormEvent) {
 		event.preventDefault()
-		writeArticleLogic.saveArticle(accessToken, title, text)
+
+		if (!title || !text) {
+			return;
+		}
+
+		const isSuccessSave = await writeArticleLogic.saveArticle(accessToken, title, text)
+		setSuccess(isSuccessSave)
 	}
 
 	function handleTitleChange(
@@ -32,36 +39,39 @@ function WriteArticle() {
 	}
 
 	return (
-		<>
-			<div className="container">
-				<Header />
-				<div className="article">
-					<div className="article__title">
-						<h1>Write new article</h1>
+		<div className="container">
+			<Header />
+			<div className="article">
+				<div className="article__title">
+					<h1>Write new article</h1>
+				</div>
+				<div className="article__content">
+					<input
+						onChange={handleTitleChange}
+						placeholder="Title"
+						type="text"
+						className="article__content-input"
+					/>
+					<div className="article__content-paragraphs">
+						<textarea
+							onChange={handleTextChange}
+							placeholder="Write your text here"
+							className="article__paragraph-item"
+						></textarea>
 					</div>
-					<div className="article__content">
-						<input
-							onChange={handleTitleChange}
-							placeholder="Title"
-							type="text"
-							className="article__content-input"
-						/>
-						<div className="article__content-paragraphs">
-							<textarea
-								onChange={handleTextChange}
-								placeholder="Write your text here"
-								className="article__paragraph-item"
-							></textarea>
-						</div>
-						<div className="article__button">
-							<button onClick={handleSave}>
-								Save and publish
-							</button>
-						</div>
+					{ success &&
+					<div className="success__save">
+						Success
+					</div>
+					}
+					<div className="article__button">
+						<button onClick={handleSave}>
+							Save and publish
+						</button>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 

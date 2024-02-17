@@ -73,3 +73,10 @@ Button {
 	padding: 20px;
 	position: relative;
 }
+
+.success__save {
+	text-align: center;
+	color: rgb(0, 175, 0);
+	font-size: 2.4rem;
+	text-shadow: 0 0 10px rgb(61, 193, 61);
+}
