@@ -66,10 +66,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                         }
                     }
                 }
-
-                axios.defaults.headers.common["Authorization"] = accessToken;
-            } else {
-                delete axios.defaults.headers.common['Authorization'];
             }
         }
 
