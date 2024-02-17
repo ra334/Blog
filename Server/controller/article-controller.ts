@@ -51,7 +51,7 @@ class ArticleController {
                         const title = item.title
                         const text = item.text
 
-                        const sentences = text.split('.').slice(0, 3).join('.') + ' ...';
+                        const sentences = text.split('.').slice(0, 3).join('.');
 
                         preview_articles.push({
                             id, user_id, created_at, title, text: sentences
