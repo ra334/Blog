@@ -17,10 +17,10 @@ export function getCookies(): TokensInterface | null {
 	const cookieObj: TokensInterface = {}
 
 	cookies.forEach(cookie => {
-		const parts = cookie.split('=')
+		const parts = cookie.trim().split('=')
 		const name = parts[0]
-		const value = parts[1]
-		cookieObj[name] = value
+		const value = parts.slice(1).join('=')
+		cookieObj[name] = decodeURIComponent(value)
 	})
 
 	return cookieObj
