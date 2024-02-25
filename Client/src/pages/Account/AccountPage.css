@@ -1,0 +1,45 @@
+.account__title {
+    text-align: center;
+	padding: 20px 0;
+}
+
+.account__title {
+
+}
+
+.account__wrapper {
+
+}
+
+.account__buttons {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+.account__chnage {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.input__button {
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.account__change-nickname {
+
+}
+
+.change__nickname-item {
+    margin: 20px 0;
+}
+
+.account__change-login {
+
+}
+
+.account__change-password {
+
+}
