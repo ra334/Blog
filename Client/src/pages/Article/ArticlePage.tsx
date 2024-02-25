@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Header from "../../components/layout/Header/Header"
+import Footer from "../../components/layout/Footer/Footer";
 import { useParams } from "react-router-dom";
 import getArticle from "./ArticleLogic";
 import './ArticlePage.css'
@@ -54,6 +55,7 @@ function ArticlePage() {
                 <div className="article__date">{getDate(date)}</div>
             </div>
             <p className="article__text">{text}</p>
+            <Footer />
         </div>
     )
 }

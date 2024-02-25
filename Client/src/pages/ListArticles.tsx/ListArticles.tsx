@@ -1,5 +1,6 @@
 import './ListArticles.css';
 import Header from '../../components/layout/Header/Header';
+import Footer from '../../components/layout/Footer/Footer';
 import { getCookieValue } from '../../tools/getCookies';
 import PageAccessDenied from '../AccessDenied/PageAccessDenied';
 import { useState, useEffect } from 'react';
@@ -72,6 +73,7 @@ function ListArticles() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

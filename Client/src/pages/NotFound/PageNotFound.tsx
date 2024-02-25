@@ -1,5 +1,6 @@
 import './PageNotFound.css'
 import Header from '../../components/layout/Header/Header'
+import Footer from '../../components/layout/Footer/Footer'
 
 function PageNotFound() {
 	return (
@@ -9,6 +10,7 @@ function PageNotFound() {
 				<h1 className="pagenotfound__message">404 Error</h1>
 				<div className="pagenotfound__text">Page not found</div>
 			</div>
+			<Footer />
 		</div>
 	)
 }

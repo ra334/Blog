@@ -1,6 +1,7 @@
 import Header from '../../components/layout/Header/Header'
 import './MainPageStyle.css'
 import { TypeAnimation } from 'react-type-animation'
+import Footer from '../../components/layout/Footer/Footer'
 
 function Main() {
 	return (
@@ -24,6 +25,7 @@ function Main() {
 					repeat={Infinity}
 				/>
 			</main>
+			<Footer />
 		</div>
 	)
 }

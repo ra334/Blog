@@ -1,5 +1,6 @@
 import './PageAccessDenied.css'
 import Header from '../../components/layout/Header/Header'
+import Footer from '../../components/layout/Footer/Footer'
 
 function PageAccessDenied() {
 	return (
@@ -8,7 +9,7 @@ function PageAccessDenied() {
 			<div className="accessdenied__wrapper">
 				<h1 className="accessdenied__message">Access Denied</h1>
 				<pre className="accessdenied__art">
-					{`                                    ████████                                  
+					{`              ████████                                  
                               ██████        ██████                            
                           ▓▓▓▓░░░░░░░░░░░░░░░░░░░░▓▓██                        
                         ██  ░░░░░░░░▒▒▒▒▒▒▒▒░░░░░░    ██                      
@@ -61,6 +62,7 @@ function PageAccessDenied() {
                     `}
 				</pre>
 			</div>
+			<Footer />
 		</div>
 	)
 }
