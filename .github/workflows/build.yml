@@ -50,5 +50,5 @@ jobs:
       - name: Deploy to server
         run: |
           echo "Starting deployment..."
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -p ${{secrets.SSH_PORT}} "${{ secrets.SSH_USERNAME }}"@"${{ secrets.SSH_HOST }}" "cd /home/${{ secrets.SSH_USERNAME }}/Blog && git pull && docker stop blog-app-1 && docker rm blog-app-1 && docker compose pull && docker compose up -d && echo "${{ secrets.SSH_PRIVATE_KEY }}" > /test.pum"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -p ${{secrets.SSH_PORT}} "${{ secrets.SSH_USERNAME }}"@"${{ secrets.SSH_HOST }}" "cd /home/${{ secrets.SSH_USERNAME }}/Blog && git pull && docker stop blog-app-1 && docker rm blog-app-1 && docker compose pull && docker compose up -d"
           echo "Deployment completed."
