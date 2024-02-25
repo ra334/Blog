@@ -22,7 +22,7 @@ h1 {
 	margin: 0;
 }
 
-button {
+button, .input__button {
 	background-color: inherit;
 	color: inherit;
 	border-radius: 8px;
@@ -43,4 +43,5 @@ button:hover {
 	max-width: 1000px;
 	height: 100vh;
 	margin: 0 auto;
+	position: relative;
 }

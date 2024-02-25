@@ -1,0 +1,23 @@
+.footer {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 0;
+    border: solid 1.5px #7fdbff;
+    border-radius: 8px;
+    padding: 10px;
+
+}
+
+.footer__icons-item {
+    width: 40px;
+    height: 40px;
+    fill: #7fdbff;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 250px;
+    margin: 0 auto;
+}
