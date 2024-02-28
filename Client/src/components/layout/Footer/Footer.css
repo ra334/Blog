@@ -1,12 +1,8 @@
 .footer {
-    position: absolute;
-    width: 100%;
-    bottom: 10px;
-    left: 0;
     border: solid 1.5px #7fdbff;
     border-radius: 8px;
     padding: 10px;
-
+    margin-bottom: 10px;
 }
 
 .footer__icons-item {

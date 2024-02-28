@@ -46,8 +46,8 @@ function Account() {
 			<h1 className='account__title'>Account</h1>
 			<div className="account__wrapper">
 				<div className="account__buttons">
-					<button onClick={logOut}>LogOut</button>
-					<button>My articles</button>
+					<button className='account__buttons-item' onClick={logOut}>LogOut</button>
+					<button className='account__buttons-item'>My articles</button>
 				</div>
 				<div className="account__chnage">
 					<form onSubmit={tryChangeNickname} className="account__change-nickname">

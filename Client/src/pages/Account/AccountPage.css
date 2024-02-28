@@ -8,13 +8,17 @@
 }
 
 .account__wrapper {
-
+    height: 600px;
 }
 
 .account__buttons {
     display: flex;
     justify-content: center;
     margin: 30px;
+}
+
+.account__buttons-item {
+    margin: 0 10px;
 }
 
 .account__chnage {

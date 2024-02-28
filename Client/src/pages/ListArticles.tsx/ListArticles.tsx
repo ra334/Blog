@@ -60,12 +60,6 @@ function ListArticles() {
                             Prev
                         </button>
 
-                        <div className="listarticle__pagination-item">
-                            <button>1</button>
-                            <button>...</button>
-                            <button>20</button>
-                        </div>
-
                         <button className="pagination__button-item">
                             Next
                             <img className='pagination__button-icon next__img' src={arrow} alt="next" />
