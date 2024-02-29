@@ -7,6 +7,7 @@ import bodyParser = require('body-parser')
 import cookieParser = require('cookie-parser')
 import userRouter from './router/user-router'
 import articleRouter from './router/article-router'
+import changeRouter from './router/change-router'
 import ErrorHandlingMiddleware from './middleware/ErrorHandlingMiddleware'
 import path = require('path')
 const app = express()
@@ -21,6 +22,7 @@ app.use(
 app.use(helmet())
 app.use(bodyParser())
 app.use(cookieParser())
+app.use('/api/change/', changeRouter)
 app.use('/api/users/', userRouter)
 app.use('/api/articles/', articleRouter)
 app.use(express.static(path.join(__dirname, 'dist')))

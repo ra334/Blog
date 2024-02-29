@@ -162,7 +162,7 @@ class UserModel {
         try {
             const user = await prisma.users.update({
                 where: {id: userID},
-                data: {login}
+                data: {login: login}
             })
 
             return user

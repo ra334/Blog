@@ -6,13 +6,14 @@ export function logOut() {
 	window.location.href = '/'
 }
 
-export async function changeNickname(newNickname: string, password: string): Promise<boolean> {
+export async function changeNickname(accessToken: string, newNickname: string, password: string): Promise<boolean> {
 	const host = import.meta.env.VITE_SERVER_HOST
 
 	const response = await axios({
 		method: 'POST',
-		url: host + 'api/change/nickname',
+		url: host + '/api/change/nickname',
 		data: {
+			accessToken,
 			newNickname,
 			password
 		}
@@ -25,13 +26,14 @@ export async function changeNickname(newNickname: string, password: string): Pro
 	}
 }
 
-export async function changeLogin(newLogin: string, password: string): Promise<boolean> {
+export async function changeLogin(accessToken: string, newLogin: string, password: string): Promise<boolean> {
 	const host = import.meta.env.VITE_SERVER_HOST
 
 	const response = await axios({
 		method: 'POST',
-		url: host + 'api/change/login',
+		url: host + '/api/change/login',
 		data: {
+			accessToken,
 			newLogin,
 			password
 		}
@@ -44,13 +46,14 @@ export async function changeLogin(newLogin: string, password: string): Promise<b
 	}
 }
 
-export async function chnagePassword(newPassword: string, oldPassword: string): Promise<boolean> {
+export async function chnagePassword(accessToken: string, newPassword: string, oldPassword: string): Promise<boolean> {
 	const host = import.meta.env.VITE_SERVER_HOST
 
 	const response = await axios({
 		method: 'POST',
-		url: host + 'api/change/nickname',
+		url: host + '/api/change/password',
 		data: {
+			accessToken,
 			newPassword,
 			oldPassword
 		}

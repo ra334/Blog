@@ -9,11 +9,12 @@ import { useState } from 'react'
 
 function Account() {
 	const [nickname, setNickname] = useState('')
-
 	const [login, setLogin] = useState('')
-	const [password, setPassword] = useState('')
-
 	const [newPassword, setNewPassword] = useState('')
+
+	const [loginPassword, setLoginPassword] = useState('')
+	const [nicknamePassword, setNicknamePassword] = useState('')
+	const [password, setPassword] = useState('')
 
 	const [nicknameSuccess, setNicknameSuccess] = useState(false)
 	const [loginSuccess, setLoginSuccess] = useState(false)
@@ -24,19 +25,20 @@ function Account() {
 
 	async function tryChangeNickname(event: { preventDefault: () => void }) {
 		event.preventDefault()
-		const isSuccess = await changeNickname(nickname, password)
+
+		const isSuccess = await changeNickname(accessToken, nickname, nicknamePassword)
 		setNicknameSuccess(isSuccess)
 	}
 
 	async function tryChangeLogin(event: { preventDefault: () => void }) {
 		event.preventDefault()
-		const isSuccess = await changeLogin(login, password)
+		const isSuccess = await changeLogin(accessToken, login, loginPassword)
 		setLoginSuccess(isSuccess)
 	}
 
 	async function tryChangePassword(event: { preventDefault: () => void }) {
 		event.preventDefault()
-		const isSuccess = await chnagePassword(newPassword, password)
+		const isSuccess = await chnagePassword(accessToken, newPassword, password)
 		setPasswordSuccess(isSuccess)
 	}
 
@@ -62,8 +64,8 @@ function Account() {
 							type="password"
 							className="change__nickname-item"
 							placeholder='Password'
-							onChange={(e) => setPassword(e.target.value)}
-							value={password}/>
+							onChange={(e) => setNicknamePassword(e.target.value)}
+							value={nicknamePassword}/>
 
 						{ nicknameSuccess &&
 							<div className="chanange__success">
@@ -85,8 +87,8 @@ function Account() {
 							type="password"
 							className="change__nickname-item"
 							placeholder='Password'
-							onChange={(e) => setPassword(e.target.value)}
-							value={password}/>
+							onChange={(e) => setLoginPassword(e.target.value)}
+							value={loginPassword}/>
 
 						{ loginSuccess &&
 							<div className="chanange__success">
