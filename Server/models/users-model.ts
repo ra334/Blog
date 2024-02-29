@@ -141,6 +141,38 @@ class UserModel {
         }
     }
 
+    async updateUserNickname(userID: string, nickname: string) {
+        await prisma.$connect()
+        try {
+            const user = await prisma.users.update({
+                where: {id: userID},
+                data: {nickname}
+            })
+
+            return user
+        } catch(e) {
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
+    async updateUserLogin(userID: string, login: string) {
+        await prisma.$connect()
+        try {
+            const user = await prisma.users.update({
+                where: {id: userID},
+                data: {login}
+            })
+
+            return user
+        } catch(e) {
+            throw(e)
+        } finally {
+            await prisma.$disconnect()
+        }
+    }
+
     async updateUserAccountStatus(userID: string, accountStatus: string) {
         await prisma.$connect()
         try {
