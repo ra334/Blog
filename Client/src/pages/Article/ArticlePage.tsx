@@ -45,7 +45,7 @@ function ArticlePage() {
         }
 
         response()
-    })
+    }, [id])
 
     return (
         <div className="container">
