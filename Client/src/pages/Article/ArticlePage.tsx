@@ -50,11 +50,13 @@ function ArticlePage() {
     return (
         <div className="container">
             <Header />
-            <h1 className="article__title">{title}</h1>
-            <div className="article__author">
-                <div className="article__date">{getDate(date)}</div>
+            <div className="article__content">
+                <h1 className="title">{title}</h1>
+                <div className="article__author">
+                    <div className="article__date">{getDate(date)}</div>
+                </div>
+                <p className="article__text">{text}</p>
             </div>
-            <p className="article__text">{text}</p>
             <Footer />
         </div>
     )

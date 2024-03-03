@@ -42,22 +42,22 @@ function WriteArticle() {
 	return (
 		<div className="container">
 			<Header />
-			<div className="article">
-				<div className="article__title">
+			<div className="write-article">
+				<div className="title">
 					<h1>Write new article</h1>
 				</div>
-				<div className="article__content">
+				<div className="write-article__content">
 					<input
 						onChange={handleTitleChange}
 						placeholder="Title"
 						type="text"
-						className="article__content-input"
+						className="write-article__content-input"
 					/>
-					<div className="article__content-paragraphs">
+					<div className="write-article__content-paragraphs">
 						<textarea
 							onChange={handleTextChange}
 							placeholder="Write your text here"
-							className="article__paragraph-item"
+							className="write-article__paragraph-item"
 						></textarea>
 					</div>
 					{ success &&
@@ -65,7 +65,7 @@ function WriteArticle() {
 						Success
 					</div>
 					}
-					<div className="article__button">
+					<div className="write-article__button">
 						<button onClick={handleSave}>
 							Save and publish
 						</button>

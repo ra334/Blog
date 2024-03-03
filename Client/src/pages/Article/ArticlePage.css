@@ -1,3 +1,7 @@
 .article__text {
     font-size: 35px;
 }
+
+.article__content {
+    height: 100%;
+}

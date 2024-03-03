@@ -1,29 +1,24 @@
-.article {
+.write-article {
 	width: 100%;
 	height: 100vh;
 }
 
-.article__content {
+.write-article__content {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
 
-.article__title {
-	text-align: center;
-	padding: 20px 0;
-}
-
-.article__input {
+.write-article__input {
 	width: 800px;
 	text-align: center;
 }
 
-.article__input::placeholder {
+.write-article__input::placeholder {
 	color: rgb(183, 183, 183);
 }
 
-.article__textarea {
+.write-article__textarea {
 	width: 100%;
 	height: 650px;
 	font-size: 30px;
@@ -35,31 +30,34 @@
 	color: white;
 }
 
-.article__button {
+.write-article__button {
 	display: flex;
 	justify-content: center;
 	margin: 30px 0;
 }
 
-.article__content-input::placeholder{
+.write-article__content-input::placeholder{
 	text-align: left;
 	font-size: 35px;
 	color: inherit;
 }
 
-.article__content-input {
+.write-article__content-input {
 	all: unset;
 	padding: 20px 0;
 	font-size: 35px;
-	z-index: 3;
 }
 
-.article__paragraph-item::placeholder {
+.write-article__paragraph-item::placeholder {
 	color: inherit;
 }
 
+.write-article__paragraph-item:focus {
+	color: white;
+}
 
-.article__paragraph-item {
+
+.write-article__paragraph-item {
 	all: unset;
 	overflow: hidden;
 	resize: none;
@@ -67,7 +65,6 @@
 	min-width: 100%;
 	font-size: 35px;
 	padding: 20px 0;
-	position: relative;
 }
 
 .success__save {
