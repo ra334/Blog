@@ -4,6 +4,7 @@ EXPOSE 5050
 
 COPY Server/build /app
 COPY Server/prisma /app
+COPY Client/robots.txt /app
 
 RUN cp .env.production .env
 RUN npm run production
