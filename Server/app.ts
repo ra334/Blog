@@ -28,6 +28,10 @@ app.use('/api/articles/', articleRouter)
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(ErrorHandlingMiddleware)
 
+app.get('/robots.txt', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'robots.txt'))
+})
+
 app.get('*', (req: Request, res: Response) => {
 	res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
