@@ -10,7 +10,8 @@ const AuthContext = createContext<{ token: string; setToken: (newToken: string) 
 const host: string = import.meta.env.VITE_SERVER_HOST
 
 async function tryUpdateToken(refreshToken: string, accessToken: string) {
-    const response = await axios({
+    try{
+        const response = await axios({
         method: 'post',
         withCredentials: true,
         url: host + '/api/users/refresh',
@@ -18,66 +19,64 @@ async function tryUpdateToken(refreshToken: string, accessToken: string) {
             refreshToken,
             accessToken
         }
-    })
+        })
 
-    if (response.status === 200) {
-        const token = response.data.accessToken;
-        if (token) {
-            return token;
+        if (response.status === 200) {
+            const token = response.data.accessToken;
+            if (token) {
+                return token;
+            }
         }
+    } catch(err) {
+        console.error('Error updating token: ', err)
+        return null;
     }
 }
 
 async function checkIsAccessTokenValid(accessToken: string) {
-    const response = await axios({
+    try{
+        const response = await axios({
         method: 'post',
         url: host + '/api/users/verify',
         data: {
             accessToken
         }
-    })
+        })
 
-    if (response.status === 200) {
-        return response.data.valid
+        if (response.status === 200) {
+            return response.data.valid
+        }
+    } catch(err) {
+        console.error("Error checking access token validity: ", err)
+        return false
     }
 }
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [accessToken, setAccessToken_] = useState(getCookieValue('accessToken'));
-    const [refreshToken] = useState(getCookieValue('refreshToken'));
-    const updatingToken = useRef(false)
-
-    function setAccessToken(newToken: string) {
-        setAccessToken_(newToken);
-    }
+    const [accessToken, setAccessToken] = useState<string>(getCookieValue('accessToken'));
+    const refreshToken = useRef<string>(getCookieValue('refreshToken'));
 
     useEffect(() => {
         async function fetchData() {
-            if (accessToken) {
-                const isAccessTokenValid = await checkIsAccessTokenValid(accessToken) || false;
-
-                if (!isAccessTokenValid) {
-                    if (!updatingToken.current) {
-                        updatingToken.current = true
-
-                        const newAccessToken =  await tryUpdateToken(refreshToken, accessToken);
-                        if (newAccessToken) {
-                            setAccessToken(newAccessToken)
-                        }
-                    }
-                }
-            }
-
             if (!accessToken) {
-                const newAccessToken =  await tryUpdateToken(refreshToken, accessToken);
+                const newAccessToken =  await tryUpdateToken(refreshToken.current, accessToken);
                 if (newAccessToken) {
                     setAccessToken(newAccessToken)
+                }
+            } else {
+                const isAccessTokenValid = await checkIsAccessTokenValid(accessToken);
+
+                if (!isAccessTokenValid) {
+                    const newAccessToken =  await tryUpdateToken(refreshToken.current, accessToken);
+                    if (newAccessToken) {
+                        setAccessToken(newAccessToken)
+                    }
                 }
             }
         }
 
         fetchData()
-    }, [accessToken, refreshToken]);
+    }, [accessToken]);
 
     const contextValue = useMemo(() => ({
         token: accessToken,
