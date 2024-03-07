@@ -4,6 +4,7 @@ import Footer from "../../components/layout/Footer/Footer";
 import { useParams } from "react-router-dom";
 import getArticle from "./ArticleLogic";
 import './ArticlePage.css'
+import getMounth from "../../tools/getMounth";
 
 interface ResponseData {
     created_at: string;
@@ -20,7 +21,7 @@ function getDate(date: string): string {
     const month = dateTime.getMonth() + 1
     const day = dateTime.getDate()
 
-    return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+    return `${getMounth(month)} ${day} ${year}`
 }
 
 function ArticlePage() {
