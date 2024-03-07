@@ -54,7 +54,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         async function fetchData() {
             if (accessToken) {
-                const isAccessTokenValid = await checkIsAccessTokenValid(accessToken);
+                const isAccessTokenValid = await checkIsAccessTokenValid(accessToken) || false;
 
                 if (!isAccessTokenValid) {
                     if (!updatingToken.current) {
@@ -65,6 +65,13 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                             setAccessToken(newAccessToken)
                         }
                     }
+                }
+            }
+
+            if (!accessToken) {
+                const newAccessToken =  await tryUpdateToken(refreshToken, accessToken);
+                if (newAccessToken) {
+                    setAccessToken(newAccessToken)
                 }
             }
         }
