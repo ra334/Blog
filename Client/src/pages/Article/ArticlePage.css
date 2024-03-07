@@ -1,6 +1,8 @@
 .article__text {
     font-size: 35px;
+    white-space: pre-wrap;
 }
+
 
 .article__content {
     height: 100%;

@@ -56,7 +56,7 @@ function ArticlePage() {
                 <div className="article__author">
                     <div className="article__date">{getDate(date)}</div>
                 </div>
-                <p className="article__text">{text}</p>
+                <pre className="article__text">{text}</pre>
             </div>
             <Footer />
         </div>
