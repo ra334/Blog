@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function getArticle(article_id: string) {
+export async function getArticle(article_id: string) {
     const host = import.meta.env.VITE_SERVER_HOST
 
     const response = await axios({
@@ -13,4 +13,28 @@ async function getArticle(article_id: string) {
     }
 }
 
-export default getArticle
+export async function getUserNickname(userID: string) {
+    const host = import.meta.env.VITE_SERVER_HOST
+
+    const response = await axios({
+        method: 'GET',
+        url: host + '/api/users/nickname/' + userID
+    })
+
+    if (response.status === 200) {
+        return response
+    }
+}
+
+export async function getUserImage(userID: string) {
+    const host = import.meta.env.VITE_SERVER_HOST
+
+    const response = await axios({
+        method: 'GET',
+        url: host + '/api/users/image/' + userID
+    })
+
+    if (response.status === 200) {
+        return response
+    }
+}

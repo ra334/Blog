@@ -36,4 +36,20 @@ router.post('/verify', (req: Request, res: Response, next: NextFunction) => {
     }
 })
 
+router.get('/nickname/:id', (req: Request, res: Response, next: NextFunction) => {
+    try {
+        userController.getUserNickname(req, res, next)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get('/image/:id', (req: Request, res: Response, next: NextFunction) => {
+    try {
+        userController.getUserImage(req, res, next)
+    } catch (err) {
+        next(err)
+    }
+})
+
 export default router

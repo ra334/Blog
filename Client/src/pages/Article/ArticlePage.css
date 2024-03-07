@@ -7,3 +7,17 @@
 .article__content {
     height: 100%;
 }
+
+.article__author-image {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.article__about {
+    display: flex;
+    align-items: center;
+}
+
+.article__author {
+    padding: 0 20px;
+}

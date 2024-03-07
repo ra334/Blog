@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import usersService from "../services/users-service";
 import tokensService from "../services/tokens-service";
 import { TokensType } from '../types/tokens-type'
+import usersModel from "../models/users-model";
 class UserController {
     #sendCookies(res: Response, tokens: TokensType) {
         const currentTime = new Date().getTime();
@@ -82,6 +83,26 @@ class UserController {
                 res.json({valid: true})
             }
 
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async getUserNickname(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userID = req.params.id
+            const user = await usersModel.getUser(userID)
+            res.json({nickname: user?.nickname})
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async getUserImage(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userID = req.params.id
+            const user = await usersModel.getUser(userID)
+            res.json({image: user?.profile_picture})
         } catch (err) {
             next(err)
         }

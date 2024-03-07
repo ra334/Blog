@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import Header from "../../components/layout/Header/Header"
 import Footer from "../../components/layout/Footer/Footer";
 import { useParams } from "react-router-dom";
-import getArticle from "./ArticleLogic";
+import {getArticle, getUserNickname, getUserImage} from "./ArticleLogic";
 import './ArticlePage.css'
 import getMounth from "../../tools/getMounth";
+import { Buffer } from 'buffer'
 
 interface ResponseData {
     created_at: string;
@@ -25,9 +26,11 @@ function getDate(date: string): string {
 }
 
 function ArticlePage() {
-    const [title, setTitle] = useState('')
-    const [text, setText] = useState('')
-    const [date, setDate] = useState('')
+    const [title, setTitle] = useState<string>('')
+    const [text, setText] = useState<string>('')
+    const [date, setDate] = useState<string>('')
+    const [nickname, setNickname] = useState<string>('')
+    const [image, setImage] = useState<string>('')
 
     const { id } = useParams();
 
@@ -37,6 +40,14 @@ function ArticlePage() {
                 const response = await getArticle(id)
                 if (response) {
                     const data = response.data as ResponseData
+
+                    const nicknameResponse = await getUserNickname(data.user_id)
+                    const imageResponse = await getUserImage(data.user_id)
+
+                    const base64Image = `data:image/png;base64,${Buffer.from(imageResponse?.data.image.data).toString('base64')}`;
+
+                    setImage(base64Image)
+                    setNickname(nicknameResponse?.data.nickname)
 
                     setTitle(data.title)
                     setText(data.text)
@@ -53,8 +64,10 @@ function ArticlePage() {
             <Header />
             <div className="article__content">
                 <h1 className="title">{title}</h1>
-                <div className="article__author">
-                    <div className="article__date">{getDate(date)}</div>
+                <div className="article__about">
+                    <img src={image} alt="Author" className="article__author-image" />
+                    <div className="article__author">{nickname}</div>
+                    <div className="article__author-date">{getDate(date)}</div>
                 </div>
                 <pre className="article__text">{text}</pre>
             </div>
