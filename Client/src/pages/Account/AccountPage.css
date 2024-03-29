@@ -1,6 +1,6 @@
 .account__title {
     text-align: center;
-	padding: 20px 0;
+    padding: 20px 0;
 }
 
 .account__title {
@@ -8,7 +8,7 @@
 }
 
 .account__wrapper {
-    height: 600px;
+    height: 100%;
 }
 
 .account__buttons {

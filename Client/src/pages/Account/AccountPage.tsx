@@ -45,8 +45,8 @@ function Account() {
 	return (
 		<div className="container">
 			<Header />
-			<h1 className='account__title'>Account</h1>
 			<div className="account__wrapper">
+				<h1 className='account__title'>Account</h1>
 				<div className="account__buttons">
 					<button className='account__buttons-item' onClick={logOut}>LogOut</button>
 					<button className='account__buttons-item'>My articles</button>
