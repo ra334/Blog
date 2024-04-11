@@ -30,15 +30,15 @@ jobs:
         with:
           platforms: all
 
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 --push --file Dockerfile -t feral113/blog:latest .
-
-      - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
       # - name: Push to Docker Hub
       #   run: docker push feral113/blog:latest
