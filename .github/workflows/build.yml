@@ -25,17 +25,24 @@ jobs:
           npm install
           npm run build
 
-      - name: Build Docker image
-        run: docker build . --file Dockerfile -t feral113/blog:latest
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
 
-      - name: Build Docker image for arm64
-        run: docker build . --file Dockerfile -t feral113/blog:latest --platform linux/arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile -t feral113/blog:latest .
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push to Docker Hub
         run: docker push feral113/blog:latest
+
 
   deploy:
     name: Deploy
