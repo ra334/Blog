@@ -19,7 +19,8 @@
 }
 
 .listarticle__content-title {
-
+    font-weight: 600;
+    font-size: 23px;
 }
 
 .listarticle__content-preview {
