@@ -33,6 +33,11 @@ function Routes() {
 		},
 
 		{
+			path: '/articles',
+			element: <ListArticlesPage />,
+		},
+
+		{
 			path: '*',
 			element: <NotFoundPage />,
 		},
@@ -51,11 +56,6 @@ function Routes() {
 				{
 					path: '/write',
 					element: <WriteArticlePage />,
-				},
-
-				{
-					path: '/articles',
-					element: <ListArticlesPage />,
 				},
 			]
 		}
