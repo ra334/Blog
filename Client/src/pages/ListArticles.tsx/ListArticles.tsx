@@ -2,7 +2,6 @@ import './ListArticles.css';
 import Header from '../../components/layout/Header/Header';
 import Footer from '../../components/layout/Footer/Footer';
 import { getCookieValue } from '../../tools/getCookies';
-import PageAccessDenied from '../AccessDenied/PageAccessDenied';
 import { useState, useEffect } from 'react';
 import getArticles from './ListArticles-logic';
 
@@ -32,11 +31,6 @@ function ListArticles() {
 
         fetchData()
     }, [])
-
-    const accessToken = getCookieValue('accessToken');
-    if (!accessToken) {
-        return <PageAccessDenied />
-    }
 
     return (
         <div className="container">
