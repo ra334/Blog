@@ -9,8 +9,18 @@ class UserController {
         const accessTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000 
         const refreshTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000 // 30 days
         
-        res.cookie('accessToken', tokens.accessToken, {expires: new Date(accessTokenCookieExpires)})
-        res.cookie('refreshToken', tokens.refreshToken, {expires: new Date(refreshTokenCookieExpires)})
+        res.cookie('accessToken', tokens.accessToken, {
+            expires: new Date(accessTokenCookieExpires),
+            sameSite: 'strict',
+            httpOnly: true,
+            secure: true
+        })
+        res.cookie('refreshToken', tokens.refreshToken, {
+            expires: new Date(refreshTokenCookieExpires),
+            sameSite: 'strict',
+            httpOnly: true,
+            secure: true
+        })
         res.send()
     }
 
