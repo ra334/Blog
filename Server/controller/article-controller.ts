@@ -34,34 +34,29 @@ class ArticleController {
 
     async getArticles(req: Request, res: Response, next: NextFunction) {
         try {
-            const { accessToken, skip, take } = req.query as ArticlesRequestQuery
+            const {skip, take } = req.query as ArticlesRequestQuery
+            const articles = await articleService.getLastArticles(Number(skip), Number(take))
 
-            if (accessToken && typeof accessToken === 'string' && tokensService.verifyToken(accessToken)) {
-                const articles = await articleService.getLastArticles(Number(skip), Number(take))
-
-                if (articles == false) {
-                    res.status(200).json([])
-                } else {
-                    const preview_articles = []
-
-                    for (const item of articles) {
-                        const id = item.id
-                        const user_id = item.user_id
-                        const created_at = item.created_at
-                        const title = item.title
-                        const text = item.text
-
-                        const sentences = text.split('.').slice(0, 3).join('.');
-
-                        preview_articles.push({
-                            id, user_id, created_at, title, text: sentences
-                        })
-                    }
-
-                    res.status(200).json(preview_articles)
-                }
+            if (articles == false) {
+                res.status(200).json([])
             } else {
-                throw ApiError.forbidden('Invalid access token')
+                const preview_articles = []
+
+                for (const item of articles) {
+                    const id = item.id
+                    const user_id = item.user_id
+                    const created_at = item.created_at
+                    const title = item.title
+                    const text = item.text
+
+                    const sentences = text.split('.').slice(0, 3).join('.');
+
+                    preview_articles.push({
+                        id, user_id, created_at, title, text: sentences
+                    })
+                }
+
+                res.status(200).json(preview_articles)
             }
         } catch (err) {
             next(err)
