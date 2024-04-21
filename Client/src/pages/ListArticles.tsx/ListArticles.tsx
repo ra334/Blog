@@ -15,15 +15,35 @@ interface ArticleInterface {
 
 function ListArticles() {
     const [articles, setArticles] = useState<ArticleInterface[]>([]);
+    const [page, setPage] = useState({
+        skip: 0,
+        take: 5
+    });
 
     useEffect(() => {
         async function fetchData() {
-            const response = await getArticles(0, 5);
+            const response = await getArticles(page.skip, page.take);
             setArticles(response.data);
         }
 
         fetchData()
     }, [])
+
+    function nextPage() {
+        setPage({
+            skip: page.skip + 5,
+            take: page.take
+        })
+    }
+
+    function prevPage() {
+        if (page.skip === 0) return
+
+        setPage({
+            skip: page.skip - 5,
+            take: page.take
+        })
+    }
 
     return (
         <div className="container">
@@ -42,12 +62,12 @@ function ListArticles() {
                 </div>
                 <div className="listarticle__pagination">
                     <div className="listarticle__pagination-button">
-                        <button className="pagination__button-item">
+                        <button className="pagination__button-item" onClick={prevPage}>
                             <img className='pagination__button-icon prev__img' src={arrow} alt="prev" />
                             Prev
                         </button>
 
-                        <button className="pagination__button-item">
+                        <button className="pagination__button-item" onClick={nextPage}>
                             Next
                             <img className='pagination__button-icon next__img' src={arrow} alt="next" />
                         </button>
