@@ -11,16 +11,16 @@ class UserController {
         
         res.cookie('accessToken', tokens.accessToken, {
             expires: new Date(accessTokenCookieExpires),
-            sameSite: 'lax',
+            sameSite: 'strict',
             httpOnly: true,
             secure: true
-        })
-        res.cookie('refreshToken', tokens.refreshToken, {
+          });
+          res.cookie('refreshToken', tokens.refreshToken, {
             expires: new Date(refreshTokenCookieExpires),
-            sameSite: 'lax',
+            sameSite: 'strict',
             httpOnly: true,
             secure: true
-        })
+          });
         res.send()
     }
 
