@@ -1,7 +1,6 @@
 import './ListArticles.css';
 import Header from '../../components/layout/Header/Header';
 import Footer from '../../components/layout/Footer/Footer';
-import { getCookieValue } from '../../tools/getCookies';
 import { useState, useEffect } from 'react';
 import getArticles from './ListArticles-logic';
 
@@ -19,14 +18,8 @@ function ListArticles() {
 
     useEffect(() => {
         async function fetchData() {
-            const accessToken = getCookieValue('accessToken');
-            if (!accessToken) return;
-            try {
-                const response = await getArticles(accessToken, 0, 5);
-                setArticles(response.data);
-            } catch (error) {
-                console.error('Error fetching articles:', error)
-            }
+            const response = await getArticles(0, 5);
+            setArticles(response.data);
         }
 
         fetchData()
