@@ -16,6 +16,7 @@ interface ArticleInterface {
 function ListArticles() {
     const [articles, setArticles] = useState<ArticleInterface[]>([]);
     const [page, setPage] = useState({
+        current: 1,
         skip: 0,
         take: 5
     });
@@ -27,10 +28,11 @@ function ListArticles() {
         }
 
         fetchData()
-    }, [])
+    }, [page])
 
     function nextPage() {
         setPage({
+            current: page.current + 1,
             skip: page.skip + 5,
             take: page.take
         })
@@ -40,6 +42,7 @@ function ListArticles() {
         if (page.skip === 0) return
 
         setPage({
+            current: page.current - 1,
             skip: page.skip - 5,
             take: page.take
         })
@@ -66,6 +69,10 @@ function ListArticles() {
                             <img className='pagination__button-icon prev__img' src={arrow} alt="prev" />
                             Prev
                         </button>
+
+                        <div className="listarticle__pagination-currentpage">
+                            {page.current}
+                        </div>
 
                         <button className="pagination__button-item" onClick={nextPage}>
                             Next
