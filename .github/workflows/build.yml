@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: 18
 
+      - name: Create .env.production file
+        run: |
+          echo "DATABASE_URL=\"${{secrets.ENV_PROD_DB}}"" > Server/.env.production
+          echo "PRIVATE_KEY=\"${{secrets.ENV_PROD_PRIVATE_KEY}}\"" >> Server/.env.production
+          echo "HTTP_ONLY=true" >> Server/.env.production
+
       - name: Install dependencies and run Gulp build
         run: |
           npm install
