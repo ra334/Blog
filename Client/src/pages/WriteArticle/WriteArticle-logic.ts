@@ -2,11 +2,9 @@ import axios from 'axios'
 
 class WriteArticleLogic {
 	async saveArticle(accessToken: string, title: string, text: string) {
-		const host = import.meta.env.VITE_SERVER_HOST
-
 		const response = await axios({
 			method: 'post',
-			url: host + '/api/articles/create',
+			url: '/api/articles/create',
 			data: {
 				accessToken,
 				title,

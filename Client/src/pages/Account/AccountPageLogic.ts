@@ -7,11 +7,9 @@ export function logOut() {
 }
 
 export async function changeNickname(accessToken: string, newNickname: string, password: string): Promise<boolean> {
-	const host = import.meta.env.VITE_SERVER_HOST
-
 	const response = await axios({
 		method: 'POST',
-		url: host + '/api/change/nickname',
+		url: '/api/change/nickname',
 		data: {
 			accessToken,
 			newNickname,
@@ -27,11 +25,9 @@ export async function changeNickname(accessToken: string, newNickname: string, p
 }
 
 export async function changeLogin(accessToken: string, newLogin: string, password: string): Promise<boolean> {
-	const host = import.meta.env.VITE_SERVER_HOST
-
 	const response = await axios({
 		method: 'POST',
-		url: host + '/api/change/login',
+		url: '/api/change/login',
 		data: {
 			accessToken,
 			newLogin,
@@ -47,11 +43,9 @@ export async function changeLogin(accessToken: string, newLogin: string, passwor
 }
 
 export async function chnagePassword(accessToken: string, newPassword: string, oldPassword: string): Promise<boolean> {
-	const host = import.meta.env.VITE_SERVER_HOST
-
 	const response = await axios({
 		method: 'POST',
-		url: host + '/api/change/password',
+		url: '/api/change/password',
 		data: {
 			accessToken,
 			newPassword,

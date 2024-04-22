@@ -1,11 +1,10 @@
 import axios from 'axios'
 
 async function subbmiting(login: string, nickname: string, password: string) {
-	const host = import.meta.env.VITE_SERVER_HOST
 
 	const response = await axios({
 		method: 'post',
-		url: host + '/api/users/' + window.location.pathname,
+		url: '/api/users' + window.location.pathname,
 		data: {
 			login,
 			nickname,

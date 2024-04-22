@@ -7,14 +7,12 @@ const AuthContext = createContext<{ token: string; setToken: (newToken: string) 
     setToken: () => {}
 });
 
-const host: string = import.meta.env.VITE_SERVER_HOST
-
 async function tryUpdateToken(refreshToken: string, accessToken: string) {
     try{
         const response = await axios({
         method: 'post',
         withCredentials: true,
-        url: host + '/api/users/refresh',
+        url: '/api/users/refresh',
         data: {
             refreshToken,
             accessToken
@@ -37,7 +35,7 @@ async function checkIsAccessTokenValid(accessToken: string) {
     try{
         const response = await axios({
         method: 'post',
-        url: host + '/api/users/verify',
+        url: '/api/users/verify',
         data: {
             accessToken
         }
