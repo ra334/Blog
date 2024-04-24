@@ -3,31 +3,21 @@ import usersService from "../services/users-service";
 import tokensService from "../services/tokens-service";
 import { TokensType } from '../types/tokens-type'
 import usersModel from "../models/users-model";
-import 'dotenv/config'
 class UserController {
     #sendCookies(res: Response, tokens: TokensType) {
         const currentTime = new Date().getTime();
-        const accessTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000 
+        const accessTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000
         const refreshTokenCookieExpires = currentTime + 30 * 24 * 60 * 60 * 1000 // 30 days
 
-        let httpOnlyValue: boolean
-
-        if (process.env.HTTP_ONLY == 'false' || '') {
-            httpOnlyValue = false
-        } else {
-            httpOnlyValue = true
-        }
-        
         res.cookie('accessToken', tokens.accessToken, {
             expires: new Date(accessTokenCookieExpires),
             sameSite: 'strict',
-            httpOnly: httpOnlyValue,
             secure: true
           });
-          res.cookie('refreshToken', tokens.refreshToken, {
+
+        res.cookie('refreshToken', tokens.refreshToken, {
             expires: new Date(refreshTokenCookieExpires),
             sameSite: 'strict',
-            httpOnly: httpOnlyValue,
             secure: true
           });
         res.send()
