@@ -1,6 +1,5 @@
 import Form from '../../components/layout/Form/Form'
 import Header from '../../components/layout/Header/Header'
-import Footer from '../../components/layout/Footer/Footer'
 import './AuthPage.css'
 
 interface AuthPageProps {
@@ -19,7 +18,6 @@ function AuthPage(props: AuthPageProps) {
 						<Form h1Text="Sign In" />
 					)}
 				</div>
-				<Footer />
 			</div>
 		</div>
 	)

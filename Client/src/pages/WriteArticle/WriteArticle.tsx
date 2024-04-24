@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './WriteArticle.css'
 import Header from '../../components/layout/Header/Header'
-import Footer from '../../components/layout/Footer/Footer'
 import writeArticleLogic from './WriteArticle-logic'
 import { getCookieValue } from '../../tools/getCookies'
 import PageAccessDenied from '../AccessDenied/PageAccessDenied'
@@ -72,7 +71,6 @@ function WriteArticle() {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	)
 }

@@ -1,5 +1,4 @@
 import Header from '../../components/layout/Header/Header'
-import Footer from '../../components/layout/Footer/Footer'
 import PageAccessDenied from '../AccessDenied/PageAccessDenied'
 import { getCookieValue } from '../../tools/getCookies'
 import { logOut, changeLogin, chnagePassword, changeNickname } from './AccountPageLogic'
@@ -123,7 +122,6 @@ function Account() {
 					</form>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	)
 }

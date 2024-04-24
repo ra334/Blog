@@ -1,6 +1,5 @@
 import './PageAccessDenied.css'
 import Header from '../../components/layout/Header/Header'
-import Footer from '../../components/layout/Footer/Footer'
 
 function PageAccessDenied() {
 	return (
@@ -62,7 +61,6 @@ function PageAccessDenied() {
                     `}
 				</pre>
 			</div>
-			<Footer />
 		</div>
 	)
 }

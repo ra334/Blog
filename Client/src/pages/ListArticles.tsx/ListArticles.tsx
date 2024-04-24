@@ -1,6 +1,5 @@
 import './ListArticles.css';
 import Header from '../../components/layout/Header/Header';
-import Footer from '../../components/layout/Footer/Footer';
 import { useState, useEffect } from 'react';
 import getArticles from './ListArticles-logic';
 
@@ -81,7 +80,6 @@ function ListArticles() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

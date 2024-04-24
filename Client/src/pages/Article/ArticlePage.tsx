@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Header from "../../components/layout/Header/Header"
-import Footer from "../../components/layout/Footer/Footer";
 import { useParams } from "react-router-dom";
 import {getArticle, getUserNickname, getUserImage} from "./ArticleLogic";
 import './ArticlePage.css'
@@ -71,7 +70,6 @@ function ArticlePage() {
                 </div>
                 <pre className="article__text">{text}</pre>
             </div>
-            <Footer />
         </div>
     )
 }
